@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetKey (KeyCode.Space)) {
 
 			if (speed < maxSpeed) {
 				speed += acceleration;
@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour {
 
 		} else {
 
-			if (speed < 0) {
+			if (speed > 0) {
 
 				speed *= 0.8f;
 
