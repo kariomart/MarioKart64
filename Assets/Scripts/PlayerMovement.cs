@@ -31,24 +31,24 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);//Temporary lock so we can't end up upside down- Clair
+        //this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);//Temporary lock so we can't end up upside down- Clair
         //A better way might be rounding down to ~30 or -30
 
-        //We needed to be able to handle many unique players
+        //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
 		var x = Input.GetAxis("HorizontalP"+(playerId+1)) * Time.deltaTime * 150.0f;
 		transform.Rotate(0, x, 0);
 
-        //This too
+        //This one too - Clair
         var y = Input.GetAxis("AccelP" + (playerId + 1));
-        //Debug.Log(y);
-		if (y>.05f) {
+
+        if (y>.05f) {
 
 			if (speed < maxSpeed) {
 				speed += (acceleration*y);
 				Debug.Log (speed);
 			}
 
-		} else if(y<-.05) {//To distinguish between player slow down and no input
+		} else if(y<-.05) {//To distinguish between player slow down and no input - Clair
 
 			if (speed > 0) {
 
@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour {
             {
                 RaceManagerScript.Singleton.HasStarted[playerId] = true;
             }
-            else
+            else if(RaceManagerScript.Singleton.LastCheckpoints[playerId]==0)
             {
                 RaceManagerScript.Singleton.lapCounts[playerId]++;
             }
