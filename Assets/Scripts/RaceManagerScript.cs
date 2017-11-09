@@ -18,7 +18,7 @@ public class RaceManagerScript : MonoBehaviour {
     public GameObject P1;
     public GameObject P2;
     //public Vector2 lapCounts;
-    public int[] lapCounts = new int[2];
+    public int[] lapCounts = { 0, 0 };
     public int[] LastCheckpoints = { 0, 0 };
     public bool P1isFirst = true;
     public Transform[] triggers = new Transform[14];
@@ -31,13 +31,13 @@ public class RaceManagerScript : MonoBehaviour {
 	void Start () {
         Singleton = this;
 
-        for(int i =0; i < lapCounts.Length; i++)
+       /* for(int i =0; i < lapCounts.Length; i++)
         {
             lapCounts[i] = 0;
-        }
+        }*/
         
 
-        for (int i = 0; i < triggers.Length; i++)
+        for (int i = 0; i < triggers.Length; i++)//The distances in this array are CUMULATIVE. 
         {
             if (i == 0)
             {
@@ -56,6 +56,8 @@ public class RaceManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //This was all the original implementation, and the basic logic mapped out more clearly. I am keeping it for now, just in case.
+
         /*if (lapCounts[0] > lapCounts[1])
         {
             P1isFirst = true;
@@ -106,7 +108,7 @@ public class RaceManagerScript : MonoBehaviour {
                 TotDistances[0] = (lapCounts[0] * triggerDist[triggerDist.Length - 1]) + triggerDist[LastCheckpoints[0] - 1] - Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position);
             }
             else
-            {
+            {//                                                                         This is the difference! LastCheckpoint equalling 0 means we are ready to go up a lap counter, so we want to compare to the total track distance
                 TotDistances[0] = (lapCounts[0] * triggerDist[triggerDist.Length - 1]) + triggerDist[triggerDist.Length - 1] - Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position);
             }
         }
