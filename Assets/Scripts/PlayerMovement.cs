@@ -6,9 +6,9 @@ public class PlayerMovement : MonoBehaviour {
 
 	//Vector2 vel =  new Vector2(0, 0);
 	Rigidbody rigid;
-	public float speed;
-	public float acceleration;
-	public float maxSpeed;
+	public float speed=0;
+	public float acceleration=.1f;
+	public float maxSpeed=10;
 
 	bool left;
 	bool right;
@@ -18,7 +18,8 @@ public class PlayerMovement : MonoBehaviour {
 	float power;
 
 	Vector3 inputVector;
-
+    //Clair's Variables
+    public int playerId = 0;
 
 
 	// Use this for initialization
@@ -30,28 +31,40 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);//Temporary lock so we can't end up upside down- Clair
+        //A better way might be rounding down to ~30 or -30
 
-
-		var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
+        //We needed to be able to handle many unique players
+		var x = Input.GetAxis("HorizontalP"+(playerId+1)) * Time.deltaTime * 150.0f;
 		transform.Rotate(0, x, 0);
 
-
-
-		if (Input.GetKey (KeyCode.Space)) {
+        //This too
+        var y = Input.GetAxis("AccelP" + (playerId + 1));
+        //Debug.Log(y);
+		if (y>.05f) {
 
 			if (speed < maxSpeed) {
-				speed += acceleration;
+				speed += (acceleration*y);
 				Debug.Log (speed);
 			}
 
-		} else {
+		} else if(y<-.05) {//To distinguish between player slow down and no input
 
 			if (speed > 0) {
 
 				speed *= 0.8f;
 
 			}
-		}
+        }
+        else
+        {
+            if (speed > 0)
+            {
+
+                speed *= 0.9f;
+
+            }
+        }
 
 
 		transform.Translate (0, 0, 1 * speed * Time.deltaTime);
@@ -63,4 +76,28 @@ public class PlayerMovement : MonoBehaviour {
 
 
 	}
+    //Clair's Stuff
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("hit: " + other.gameObject.name);
+        if (other.gameObject.name == "trigger" + (RaceManagerScript.Singleton.LastCheckpoints[playerId] + 1) && RaceManagerScript.Singleton.LastCheckpoints[playerId]< 13)
+        {
+            RaceManagerScript.Singleton.LastCheckpoints[playerId]++;
+        }
+        if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == 13 && other.gameObject.name == "trigger14")
+        {
+            RaceManagerScript.Singleton.LastCheckpoints[playerId] = 0;
+        }
+        if (other.gameObject.name == "trigger1")
+        {
+            if (!RaceManagerScript.Singleton.HasStarted[playerId])
+            {
+                RaceManagerScript.Singleton.HasStarted[playerId] = true;
+            }
+            else
+            {
+                RaceManagerScript.Singleton.lapCounts[playerId]++;
+            }
+        }
+    }
 }
