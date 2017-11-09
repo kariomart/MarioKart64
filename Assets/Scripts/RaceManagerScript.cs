@@ -36,7 +36,7 @@ public class RaceManagerScript : MonoBehaviour {
             lapCounts[i] = 0;
         }*/
         
-
+	// TODO: WHAT IS THIS DOING??? TELL US
         for (int i = 0; i < triggers.Length; i++)//The distances in this array are CUMULATIVE. 
         {
             if (i == 0)
@@ -103,6 +103,7 @@ public class RaceManagerScript : MonoBehaviour {
         //For minimap
         if (HasStarted[0])
         {
+	// TODO: WHAT IS THIS DOING? WRITE COMMENTS
             if (LastCheckpoints[0]!= 0)
             {
                 TotDistances[0] = (lapCounts[0] * triggerDist[triggerDist.Length - 1]) + triggerDist[LastCheckpoints[0] - 1] - Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position);
@@ -114,6 +115,7 @@ public class RaceManagerScript : MonoBehaviour {
         }
         if (HasStarted[1])
         {
+	// TODO: WHAT IS THIS DOING? WRITE COMMENTS
             if (LastCheckpoints[1] != 0)
             {
                 TotDistances[1] = (lapCounts[1] * triggerDist[triggerDist.Length - 1]) + triggerDist[LastCheckpoints[1] - 1] - Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[1]].position);
