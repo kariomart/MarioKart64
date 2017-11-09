@@ -17,23 +17,26 @@ public class RaceManagerScript : MonoBehaviour {
 
     public GameObject P1;
     public GameObject P2;
-    public Vector2 lapCounts;
-    public int P1LastCheckpoint=0;
-    public int P2LastCheckpoint=0;
+    //public Vector2 lapCounts;
+    public int[] lapCounts = new int[2];
+    public int[] LastCheckpoints = { 0, 0 };
     public bool P1isFirst = true;
     public Transform[] triggers = new Transform[14];
     public float[] triggerDist = new float[14];
-    public float P1TotDist = 0;
-    public float P2TotDist = 0;
-    public bool P1HasStarted = false;
-    public bool P2HasStarted = false;
+
+    public float[] TotDistances = { 0, 0 };
+   
+    public bool[] HasStarted = { false, false };
     //public Vector3[] triggerPos = new Vector3[14];
 	void Start () {
         Singleton = this;
-        //for(int i =0; i < triggers.Length; i++)
-        //{
-        // triggerPos[i] = triggers[i].transform.position;
-        // }
+
+        for(int i =0; i < lapCounts.Length; i++)
+        {
+            lapCounts[i] = 0;
+        }
+        
+
         for (int i = 0; i < triggers.Length; i++)
         {
             if (i == 0)
@@ -53,27 +56,27 @@ public class RaceManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (lapCounts.x > lapCounts.y)
+        /*if (lapCounts[0] > lapCounts[1])
         {
             P1isFirst = true;
-        }else if (lapCounts.x < lapCounts.y)
+        }else if (lapCounts[0] < lapCounts[1])
         {
             P1isFirst = false;
-        }else if (P1LastCheckpoint > P2LastCheckpoint)
+        }else if (LastCheckpoints[0] > LastCheckpoints[1])
         {
             P1isFirst = true;
 
         }
-        else if (P1LastCheckpoint < P2LastCheckpoint)
+        else if (LastCheckpoints[0] < LastCheckpoints[1])
         {
             P1isFirst = false;
 
-        }else if(Vector3.Distance(P1.transform.position, triggers[P1LastCheckpoint].position)< Vector3.Distance(P2.transform.position, triggers[P1LastCheckpoint].position))
+        }else if(Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position)< Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[0]].position))
         {
             P1isFirst = true;
             
         }
-        else if (Vector3.Distance(P1.transform.position, triggers[P1LastCheckpoint].position) > Vector3.Distance(P2.transform.position, triggers[P1LastCheckpoint].position))
+        else if (Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position) > Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[0]].position))
         {
             P1isFirst = false;
         }else
@@ -84,32 +87,38 @@ public class RaceManagerScript : MonoBehaviour {
         {
             Debug.Log("P1Pos= " + P1.transform.position);
             Debug.Log("P2Pos= " + P2.transform.position);
-            Debug.Log("P1Distance: " + Vector3.Distance(P1.transform.position, triggers[P1LastCheckpoint].position));
-            Debug.Log("P2Distance: " + Vector3.Distance(P2.transform.position, triggers[P2LastCheckpoint].position));
-            Debug.Log("For reference, we think the next checkpoint is: " + triggers[P1LastCheckpoint]);
+            Debug.Log("P1Distance: " + Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position));
+            Debug.Log("P2Distance: " + Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[1]].position));
+            Debug.Log("For reference, we think the next checkpoint is: " + triggers[LastCheckpoints[0]]);
+        }*/
+        if (TotDistances[0] < TotDistances[1])
+        {
+            P1isFirst = false;
+        }else
+        {
+            P1isFirst = true;
         }
-
         //For minimap
-        if (P1HasStarted)
+        if (HasStarted[0])
         {
-            if (P1LastCheckpoint != 0)
+            if (LastCheckpoints[0]!= 0)
             {
-                P1TotDist = (lapCounts.x * triggerDist[triggerDist.Length - 1]) + triggerDist[P1LastCheckpoint - 1] - Vector3.Distance(P1.transform.position, triggers[P1LastCheckpoint].position);
+                TotDistances[0] = (lapCounts[0] * triggerDist[triggerDist.Length - 1]) + triggerDist[LastCheckpoints[0] - 1] - Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position);
             }
             else
             {
-                P1TotDist = (lapCounts.x * triggerDist[triggerDist.Length - 1]) + triggerDist[triggerDist.Length - 1] - Vector3.Distance(P1.transform.position, triggers[P1LastCheckpoint].position);
+                TotDistances[0] = (lapCounts[0] * triggerDist[triggerDist.Length - 1]) + triggerDist[triggerDist.Length - 1] - Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position);
             }
         }
-        if (P2HasStarted)
+        if (HasStarted[1])
         {
-            if (P2LastCheckpoint != 0)
+            if (LastCheckpoints[1] != 0)
             {
-                P2TotDist = (lapCounts.y * triggerDist[triggerDist.Length - 1]) + triggerDist[P2LastCheckpoint - 1] - Vector3.Distance(P2.transform.position, triggers[P2LastCheckpoint].position);
+                TotDistances[1] = (lapCounts[1] * triggerDist[triggerDist.Length - 1]) + triggerDist[LastCheckpoints[1] - 1] - Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[1]].position);
             }
             else
             {
-                P2TotDist = (lapCounts.y * triggerDist[triggerDist.Length - 1]) + triggerDist[triggerDist.Length - 1] - Vector3.Distance(P2.transform.position, triggers[P2LastCheckpoint].position);
+                TotDistances[1] = (lapCounts[1] * triggerDist[triggerDist.Length - 1]) + triggerDist[triggerDist.Length - 1] - Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[1]].position);
             }
         }
     }
