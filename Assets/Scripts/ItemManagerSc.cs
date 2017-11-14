@@ -1,26 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum items
+{
+    greenShell,
+    greenShellTrio,
+    redShell,
+    redShellTrio,
+    blueShell,
+    banana,
+    bananaBunch,
+    mushroom,
+    mushroomTrio,
+    mushroomGolden,
+    boo,
+    badCube,
+    invulnStar,
+    lightning
+}
 public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the player gets
 
-    public enum items
-    {
-        greenShell,
-        greenShellTrio,
-        redShell,
-        redShellTrio,
-        blueShell,
-        banana,
-        bananaBunch,
-        mushroom,
-        mushroomTrio,
-        mushroomGolden,
-        boo,
-        badCube,
-        invulnStar,
-        lightning
-    }
+   
     int playerPos;
     public GameObject ItemBox;
     float boxTimer = 0;
@@ -29,6 +29,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
     bool canGrabItem;
     int itemNum;
     public items assignedItem;
+    public PlayerItemSc PlayerSc;
         
 	// Use this for initialization
 	void Start () {
@@ -153,7 +154,8 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
                 assignedItem = items.greenShellTrio;
             }
         }
-        
+        Debug.Log("Assigned item: " + assignedItem);
+        PlayerSc.equipItem(assignedItem);
         yield return new WaitUntil(() => boxTimer >= boxRegen);
         Instantiate(ItemBox, gameObject.transform.position, Quaternion.identity, gameObject.transform);
         startTimer = false;
