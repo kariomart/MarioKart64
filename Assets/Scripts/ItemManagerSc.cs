@@ -47,9 +47,11 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
 
     private void OnTriggerEnter(Collider other)
     {
+        PlayerSc = other.GetComponent<PlayerItemSc>();
         Debug.Log("Collide!");
         if (canGrabItem == true)
         {
+            
             Destroy(transform.GetChild(0).gameObject);
             StartCoroutine(BoxRegen());
             //item delivery goes here
