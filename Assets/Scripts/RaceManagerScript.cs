@@ -31,10 +31,6 @@ public class RaceManagerScript : MonoBehaviour {
 	void Start () {
         Singleton = this;
 
-       /* for(int i =0; i < lapCounts.Length; i++)
-        {
-            lapCounts[i] = 0;
-        }*/
         
 	// TODO: WHAT IS THIS DOING??? TELL US
         for (int i = 0; i < triggers.Length; i++)//The distances in this array are CUMULATIVE. 
@@ -104,9 +100,11 @@ public class RaceManagerScript : MonoBehaviour {
         if (HasStarted[0])
         {
 	// TODO: WHAT IS THIS DOING? WRITE COMMENTS
-            if (LastCheckpoints[0]!= 0)
+            if (LastCheckpoints[0]!= 0)//If P1 has started
             {
-                TotDistances[0] = (lapCounts[0] * triggerDist[triggerDist.Length - 1]) + triggerDist[LastCheckpoints[0] - 1] - Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position);
+                //their total distance equals their laps completed * course length + the distance from the start of the course to their next checkpoint - the distance between them and their next checkpoint
+                TotDistances[0] = (lapCounts[0] * triggerDist[triggerDist.Length - 1]) + triggerDist[LastCheckpoints[0]-1] - Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position);
+                
             }
             else
             {//                                                                         This is the difference! LastCheckpoint equalling 0 means we are ready to go up a lap counter, so we want to compare to the total track distance
