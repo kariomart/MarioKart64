@@ -17,6 +17,8 @@ ModelImporter:
     100018: pPipe1
     100020: pPipe2
     100022: pPipe3
+    100024: curve2
+    100026: pCube11
     400000: curve1
     400002: group
     400004: //RootNode
@@ -29,6 +31,8 @@ ModelImporter:
     400018: pPipe1
     400020: pPipe2
     400022: pPipe3
+    400024: curve2
+    400026: pCube11
     2300000: pCube10
     2300002: pCube9
     2300004: pPlane1_MeshPart0
@@ -37,6 +41,7 @@ ModelImporter:
     2300010: pPipe1
     2300012: pPipe2
     2300014: pPipe3
+    2300016: pCube11
     3300000: pCube10
     3300002: pCube9
     3300004: pPlane1_MeshPart0
@@ -45,6 +50,7 @@ ModelImporter:
     3300010: pPipe1
     3300012: pPipe2
     3300014: pPipe3
+    3300016: pCube11
     4300000: pCube9
     4300002: pPlane1_MeshPart0
     4300004: pPlane1_MeshPart1
@@ -53,6 +59,7 @@ ModelImporter:
     4300010: pPipe1
     4300012: pPipe2
     4300014: pPipe3
+    4300016: pCube11
     9500000: //RootNode
   materials:
     importMaterials: 1
