@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour {
 	void Start () {
 
 		rigid = GetComponent<Rigidbody> ();
+		acceleration = 0.1f;
+		maxSpeed = 10f;
 		
 	}
 	
@@ -44,7 +46,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (y>.05f) {
 
 			if (speed < maxSpeed) {
-				speed += (acceleration*y);
+				speed += acceleration;
 				Debug.Log (speed);
 			}
 
@@ -52,7 +54,8 @@ public class PlayerMovement : MonoBehaviour {
 
 			if (speed > 0) {
 
-				speed *= 0.8f;
+				//speed *= 0.8f;
+				speed += -acceleration;
 
 			}
         }
@@ -101,3 +104,6 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 }
+
+				speed += (acceleration*y);
+				Debug.Log (speed);
