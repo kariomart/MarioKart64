@@ -32,28 +32,30 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        /*if (this.transform.rotation.eulerAngles.x > 30)//checking our rotation doesn't go crazy - Clair
+       /* if (this.transform.rotation.eulerAngles.x > 5)//checking our rotation doesn't go crazy - Clair
         {
-            this.transform.rotation = Quaternion.Euler(30, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+            this.transform.rotation = Quaternion.Euler(5, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+           
 
-        }else if(this.transform.rotation.eulerAngles.x < -30)
+        }else if(this.transform.rotation.eulerAngles.x < -5)
         {
-            this.transform.rotation = Quaternion.Euler(-30, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+            this.transform.rotation = Quaternion.Euler(-5, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
         }
 
-        if (this.transform.rotation.eulerAngles.z > 30)//checking our rotation doesn't go crazy - Clair
+        if (this.transform.rotation.eulerAngles.z > 5)//checking our rotation doesn't go crazy - Clair
         {
-            this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 30);
+            this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 5);
         }
-        else if (this.transform.rotation.eulerAngles.z < -30)
+        else if (this.transform.rotation.eulerAngles.z < -5)
         {
-            this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, -30);
+            this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, -5);
         }*/
-            //Temporary lock so we can't end up upside down- Clair
-            //A better way might be rounding down to ~30 or -30
+        //Temporary lock so we can't end up upside down- Clair
+        //A better way might be rounding down to ~30 or -30
+        this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, 0);
 
-            //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
-            var x = Input.GetAxis("HorizontalP"+(playerId+1)) * Time.deltaTime * 150.0f;
+        //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
+        var x = Input.GetAxis("HorizontalP"+(playerId+1)) * Time.deltaTime * 150.0f;
 		transform.Rotate(0, x, 0);
 
         //This one too - Clair
@@ -113,12 +115,12 @@ public class PlayerMovement : MonoBehaviour {
 
         // TODO: it would be nice to comment this for other group members?
        // Debug.Log("hit: " + other.gameObject.name);
-        if (other.gameObject.name == "trigger" + (RaceManagerScript.Singleton.LastCheckpoints[playerId] + 1) && RaceManagerScript.Singleton.LastCheckpoints[playerId]< 13)
+        if (other.gameObject.name == "trigger" + (RaceManagerScript.Singleton.LastCheckpoints[playerId] + 1) && RaceManagerScript.Singleton.LastCheckpoints[playerId]< RaceManagerScript.Singleton.triggers.Length - 1)
         {
             RaceManagerScript.Singleton.LastCheckpoints[playerId]++;
         }
 	    // TODO: it would be nice to check the actual length of the array or item count, instead of hard coding a length of 13 or 14 etc
-        if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == 13 && other.gameObject.name == "trigger14")
+        if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == RaceManagerScript.Singleton.triggers.Length-1 && other.gameObject.name == "trigger" + RaceManagerScript.Singleton.triggers.Length)
         {
             RaceManagerScript.Singleton.LastCheckpoints[playerId] = 0;
         }
