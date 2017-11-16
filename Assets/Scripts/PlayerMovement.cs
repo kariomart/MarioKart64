@@ -20,8 +20,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	Vector3 inputVector;
     //Clair's Variables
-	// TODO: how does PlayerID work / get assigned? it would be helpful to write a note here
-    public int playerId = 0;
+    public int playerId = 0;//PlayerID is Currently assigned in the inspector. We could also easily have it be assigned by RaceManager
 
 
 	// Use this for initialization
@@ -33,11 +32,28 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);//Temporary lock so we can't end up upside down- Clair
-        //A better way might be rounding down to ~30 or -30
+        /*if (this.transform.rotation.eulerAngles.x > 30)//checking our rotation doesn't go crazy - Clair
+        {
+            this.transform.rotation = Quaternion.Euler(30, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
 
-        //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
-		var x = Input.GetAxis("HorizontalP"+(playerId+1)) * Time.deltaTime * 150.0f;
+        }else if(this.transform.rotation.eulerAngles.x < -30)
+        {
+            this.transform.rotation = Quaternion.Euler(-30, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+        }
+
+        if (this.transform.rotation.eulerAngles.z > 30)//checking our rotation doesn't go crazy - Clair
+        {
+            this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 30);
+        }
+        else if (this.transform.rotation.eulerAngles.z < -30)
+        {
+            this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, -30);
+        }*/
+            //Temporary lock so we can't end up upside down- Clair
+            //A better way might be rounding down to ~30 or -30
+
+            //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
+            var x = Input.GetAxis("HorizontalP"+(playerId+1)) * Time.deltaTime * 150.0f;
 		transform.Rotate(0, x, 0);
 
         //This one too - Clair
@@ -49,13 +65,13 @@ public class PlayerMovement : MonoBehaviour {
 
 			if (speed < maxSpeed) {
 				speed += (acceleration*y);
-				Debug.Log (speed);
+				//Debug.Log (speed);
 			}
 
 		} else if(y<-.05) {//To distinguish between player slow down and no input - Clair
 
-			if (speed > 0) {
-				// TODO: what is this doing and why?
+			if (speed > 0) {//If we are holding back but moving forward.... -Clair
+
 				speed *= 0.8f; // TODO: if this is a tuning value, I'd expose it as a specific var?
 
 			}
@@ -84,8 +100,19 @@ public class PlayerMovement : MonoBehaviour {
     //Clair's Stuff
     private void OnTriggerEnter(Collider other)
     {
-	    // TODO: it would be nice to comment this for other group members?
-        Debug.Log("hit: " + other.gameObject.name);
+        if (other.gameObject.name == "trigger1")
+        {
+            if (!RaceManagerScript.Singleton.HasStarted[playerId])
+            {
+                RaceManagerScript.Singleton.HasStarted[playerId] = true;
+            }else if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == 0)
+            {
+                RaceManagerScript.Singleton.lapCounts[playerId]++;
+            }
+        }
+
+        // TODO: it would be nice to comment this for other group members?
+       // Debug.Log("hit: " + other.gameObject.name);
         if (other.gameObject.name == "trigger" + (RaceManagerScript.Singleton.LastCheckpoints[playerId] + 1) && RaceManagerScript.Singleton.LastCheckpoints[playerId]< 13)
         {
             RaceManagerScript.Singleton.LastCheckpoints[playerId]++;
@@ -96,16 +123,7 @@ public class PlayerMovement : MonoBehaviour {
             RaceManagerScript.Singleton.LastCheckpoints[playerId] = 0;
         }
 	    // TODO: again, just comment on what each chunk is doing?
-        if (other.gameObject.name == "trigger1")
-        {
-            if (!RaceManagerScript.Singleton.HasStarted[playerId])
-            {
-                RaceManagerScript.Singleton.HasStarted[playerId] = true;
-            }
-            else if(RaceManagerScript.Singleton.LastCheckpoints[playerId]==0)
-            {
-                RaceManagerScript.Singleton.lapCounts[playerId]++;
-            }
-        }
+
+        
     }
 }
