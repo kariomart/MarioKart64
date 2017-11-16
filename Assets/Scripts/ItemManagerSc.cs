@@ -23,6 +23,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
    
     int playerPos;
     public GameObject ItemBox;
+    public GameObject QMark;
     float boxTimer = 0;
     bool startTimer = false;
     public float boxRegen;
@@ -30,12 +31,27 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
     int itemNum;
     public items assignedItem;
     public PlayerItemSc PlayerSc;
-        
-	// Use this for initialization
-	void Start () {
+    public float xRot;
+    public float yRot;
+    public float zRot;
+
+    // Use this for initialization
+    void Start () {
         Instantiate(ItemBox, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+        Instantiate(QMark, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+
         canGrabItem = true;
-	}
+        xRot = Random.Range(-.4f, .4f);
+        if (xRot <= 0)
+        {
+            yRot = 1;
+        }
+        else if (xRot >= 0.001f)
+        {
+            yRot = -1;
+        }
+        zRot = Random.Range(0.5f, .8f);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -43,6 +59,9 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         {
             boxTimer += Time.deltaTime;
         }
+        
+        transform.Rotate(xRot,yRot,zRot);
+        
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -53,6 +72,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         {
             
             Destroy(transform.GetChild(0).gameObject);
+            Destroy(transform.GetChild(1).gameObject);
             StartCoroutine(BoxRegen());
             //item delivery goes here
         }
@@ -158,8 +178,12 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         }
         Debug.Log("Assigned item: " + assignedItem);
         PlayerSc.equipItem(assignedItem);
+        xRot = Random.Range(0.1f, .4f);
+        yRot = -yRot;
+        zRot = Random.Range(0.5f, .8f);
         yield return new WaitUntil(() => boxTimer >= boxRegen);
         Instantiate(ItemBox, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+        Instantiate(QMark, gameObject.transform.position, Quaternion.identity, gameObject.transform);
         startTimer = false;
         boxTimer = 0;
         canGrabItem = true;

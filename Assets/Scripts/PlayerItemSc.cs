@@ -29,6 +29,6 @@ public class PlayerItemSc : MonoBehaviour {
     }
     public void mushroomBoost()
     {
-        MovementSc.Boost();
+        //MovementSc.Boost();
     }
 }
