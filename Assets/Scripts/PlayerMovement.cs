@@ -130,7 +130,7 @@ public class PlayerMovement : MonoBehaviour {
         //Spencer's Banana Code
         if (other.gameObject.tag == "BananaTag" && !isInvincible)
         {
-            Debug.Log("Collided w banan");
+            //Debug.Log("Collided w banan");
             speed = .5f;
             acceleration = 0f;
             StartCoroutine(HitBanana());
@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour {
             t += Time.deltaTime;
         }
         transform.rotation = StartRotation;
-        Debug.Log("HitBanana() activated");
+        //Debug.Log("HitBanana() activated");
         yield return new WaitForSeconds(1);
         acceleration = 0.1f;
     }

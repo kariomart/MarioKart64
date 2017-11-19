@@ -59,29 +59,28 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         {
             boxTimer += Time.deltaTime;
         }
-        
-        transform.Rotate(xRot,yRot,zRot);
-        
+        transform.Rotate(xRot,yRot,zRot); 
 	}
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerSc = other.GetComponent<PlayerItemSc>();
-        Debug.Log("Collide!");
-        if (canGrabItem == true)
+        if (other.tag == "Player")
         {
-            
-            Destroy(transform.GetChild(0).gameObject);
-            Destroy(transform.GetChild(1).gameObject);
-            StartCoroutine(BoxRegen());
-            //item delivery goes here
+            PlayerSc = other.GetComponent<PlayerItemSc>();
+            if (canGrabItem == true)
+            {
+
+                Destroy(transform.GetChild(0).gameObject);
+                Destroy(transform.GetChild(1).gameObject);
+                StartCoroutine(BoxRegen());
+                //item delivery goes here
+            }
         }
     }
 
     IEnumerator BoxRegen()
     {
         int posAtHit = playerPos;
-        Debug.Log("BoxRegen start!");
         canGrabItem = false;
         startTimer = true;
         itemNum = Random.Range(0, 100);
@@ -176,6 +175,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
                 assignedItem = items.greenShellTrio;
             }
         }
+        Debug.Log("Roll: " + itemNum);
         Debug.Log("Assigned item: " + assignedItem);
         PlayerSc.equipItem(assignedItem);
         xRot = Random.Range(0.1f, .4f);
