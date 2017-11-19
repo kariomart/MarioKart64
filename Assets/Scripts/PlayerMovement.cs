@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-	//Vector2 vel =  new Vector2(0, 0);
+    //items stuff
+    public bool isInvincible;
+    
+    //Vector2 vel =  new Vector2(0, 0);
 	Rigidbody rigid;
 	public float speed=0;
 	public float acceleration=.1f;
@@ -124,6 +127,33 @@ public class PlayerMovement : MonoBehaviour {
         }
 	    // TODO: again, just comment on what each chunk is doing?
 
-        
+        //Spencer's Banana Code
+        if (other.gameObject.tag == "BananaTag" && !isInvincible)
+        {
+            Debug.Log("Collided w banan");
+            speed = .5f;
+            acceleration = 0f;
+            StartCoroutine(HitBanana());
+            
+            Destroy(other.gameObject);
+            
+        }
+    }
+
+    IEnumerator HitBanana()
+    {
+        float duration = 1;
+        Quaternion StartRotation = transform.rotation;
+        float t = 0f;
+        while (t<duration)
+        {
+            transform.rotation = StartRotation * Quaternion.AngleAxis(t / duration * 720f, Vector3.up);
+            yield return null;
+            t += Time.deltaTime;
+        }
+        transform.rotation = StartRotation;
+        Debug.Log("HitBanana() activated");
+        yield return new WaitForSeconds(1);
+        acceleration = 0.1f;
     }
 }
