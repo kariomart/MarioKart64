@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour {
         }
 	}
     
-  IEnumerator HitBanana()
+  public IEnumerator HitBanana()
     {
         float duration = 1;
         Quaternion StartRotation = transform.rotation;
@@ -164,7 +164,7 @@ public class PlayerMovement : MonoBehaviour {
         acceleration = 0.1f;
     }
 
-    IEnumerator Flip()
+   public IEnumerator Flip()
     {
         float duration = 1;
         Quaternion StartRotation = transform.rotation;

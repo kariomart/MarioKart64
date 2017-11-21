@@ -26,6 +26,15 @@ public class BadCubeSc : MonoBehaviour {
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+          other.GetComponent<PlayerMovement>().StartCoroutine(other.GetComponent<PlayerMovement>().Flip());
+            Destroy(gameObject);
+        }
+    }
+
     // Update is called once per frame
     void Update () {
         transform.Rotate(xRot, yRot, zRot);
