@@ -313,7 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  acceleration: 0.25
+  acceleration: 0.1
   maxSpeed: 10
 --- !u!23 &623239942
 MeshRenderer:
