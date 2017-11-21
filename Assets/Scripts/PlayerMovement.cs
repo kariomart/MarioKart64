@@ -97,7 +97,10 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(Flip());
+        }
 
 
 
@@ -135,8 +138,15 @@ public class PlayerMovement : MonoBehaviour {
             Destroy(other.gameObject);
             
         }
-
+    if (other.gameObject.tag == "Shell")
+        {
+            speed = .5f;
+            acceleration = 0f;
+            StartCoroutine(Flip());
+            Destroy(other.gameObject);
+        }
 	}
+    
   IEnumerator HitBanana()
     {
         float duration = 1;
@@ -150,6 +160,24 @@ public class PlayerMovement : MonoBehaviour {
         }
         transform.rotation = StartRotation;
         //Debug.Log("HitBanana() activated");
+        yield return new WaitForSeconds(1);
+        acceleration = 0.1f;
+    }
+
+    IEnumerator Flip()
+    {
+        float duration = 1;
+        Quaternion StartRotation = transform.rotation;
+        float t = 0f;
+        rigid.constraints = RigidbodyConstraints.None; ;
+        rigid.AddForce(transform.up * 100);
+        while (t < duration)
+        {
+            transform.rotation = StartRotation * Quaternion.AngleAxis(t / duration * 720f, Vector3.up);
+            yield return null;
+            t += Time.deltaTime;
+        }
+        transform.rotation = StartRotation;
         yield return new WaitForSeconds(1);
         acceleration = 0.1f;
     }
