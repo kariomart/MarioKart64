@@ -17,6 +17,9 @@ public class RaceManagerScript : MonoBehaviour {
 
     public GameObject P1;
     public GameObject P2;
+
+    public RectTransform FirstMarker;
+    public RectTransform SecondMarker;
     //public Vector2 lapCounts;
     public int[] lapCounts = { 0, 0 };
     public int[] LastCheckpoints = { 0, 0 };
@@ -27,6 +30,8 @@ public class RaceManagerScript : MonoBehaviour {
     public float[] TotDistances = { 0, 0 };
    
     public bool[] HasStarted = { false, false };
+
+    
     //public Vector3[] triggerPos = new Vector3[14];
 	void Start () {
         Singleton = this;
@@ -52,54 +57,22 @@ public class RaceManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //This was all the original implementation, and the basic logic mapped out more clearly. I am keeping it for now, just in case.
-
-        /*if (lapCounts[0] > lapCounts[1])
-        {
-            P1isFirst = true;
-        }else if (lapCounts[0] < lapCounts[1])
+        if (TotDistances[0] < TotDistances[1])// Whoever has covered more ground is first
         {
             P1isFirst = false;
-        }else if (LastCheckpoints[0] > LastCheckpoints[1])
-        {
-            P1isFirst = true;
+            SecondMarker.position = new Vector3(Screen.width*.1f, Screen.height*.65f,0);
+            FirstMarker.position = new Vector3(Screen.width * .1f, Screen.height * .1f, 0);
 
         }
-        else if (LastCheckpoints[0] < LastCheckpoints[1])
-        {
-            P1isFirst = false;
-
-        }else if(Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position)< Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[0]].position))
+        else
         {
             P1isFirst = true;
-            
+            FirstMarker.position = new Vector3(Screen.width * .1f, Screen.height * .65f, 0);
+            SecondMarker.position = new Vector3(Screen.width * .1f, Screen.height * .1f, 0);
         }
-        else if (Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position) > Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[0]].position))
-        {
-            P1isFirst = false;
-        }else
-        {
-            P1isFirst = true;
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("P1Pos= " + P1.transform.position);
-            Debug.Log("P2Pos= " + P2.transform.position);
-            Debug.Log("P1Distance: " + Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position));
-            Debug.Log("P2Distance: " + Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[1]].position));
-            Debug.Log("For reference, we think the next checkpoint is: " + triggers[LastCheckpoints[0]]);
-        }*/
-        if (TotDistances[0] < TotDistances[1])
-        {
-            P1isFirst = false;
-        }else
-        {
-            P1isFirst = true;
-        }
-        //For minimap
+        
         if (HasStarted[0])
         {
-	// TODO: WHAT IS THIS DOING? WRITE COMMENTS
             if (LastCheckpoints[0]!= 0)//If P1 has started
             {
                 //their total distance equals their laps completed * course length + the distance from the start of the course to their next checkpoint - the distance between them and their next checkpoint
@@ -111,9 +84,8 @@ public class RaceManagerScript : MonoBehaviour {
                 TotDistances[0] = (lapCounts[0] * triggerDist[triggerDist.Length - 1]) + triggerDist[triggerDist.Length - 1] - Vector3.Distance(P1.transform.position, triggers[LastCheckpoints[0]].position);
             }
         }
-        if (HasStarted[1])
+        if (HasStarted[1])//P2 Version of above
         {
-	// TODO: WHAT IS THIS DOING? WRITE COMMENTS
             if (LastCheckpoints[1] != 0)
             {
                 TotDistances[1] = (lapCounts[1] * triggerDist[triggerDist.Length - 1]) + triggerDist[LastCheckpoints[1] - 1] - Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[1]].position);
