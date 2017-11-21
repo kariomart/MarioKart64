@@ -54,9 +54,10 @@ public class PlayerMovement : MonoBehaviour {
         }*/
         //Temporary lock so we can't end up upside down- Clair
         //A better way might be rounding down to ~30 or -30
-        //this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, 0);
+        this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, 0);
 
         //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
+       
         var x = Input.GetAxis("HorizontalP"+(playerId+1)) * Time.deltaTime * 150.0f;
 		transform.Rotate(0, x, 0);
 
