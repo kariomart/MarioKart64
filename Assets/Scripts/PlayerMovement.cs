@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
+  
+  //items stuff
+  public bool isInvincible;
 
 	//Vector2 vel =  new Vector2(0, 0);
 	Rigidbody rigid;
@@ -34,21 +37,20 @@ public class PlayerMovement : MonoBehaviour {
 	void Update () {
 		/*if (this.transform.rotation.eulerAngles.x > 30)//checking our rotation doesn't go crazy - Clair
         {
-            this.transform.rotation = Quaternion.Euler(5, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
-           
+            this.transform.rotation = Quaternion.Euler(30, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
 
-        }else if(this.transform.rotation.eulerAngles.x < -5)
+        }else if(this.transform.rotation.eulerAngles.x < -30)
         {
-            this.transform.rotation = Quaternion.Euler(-5, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+            this.transform.rotation = Quaternion.Euler(-30, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
         }
 
-        if (this.transform.rotation.eulerAngles.z > 5)//checking our rotation doesn't go crazy - Clair
+        if (this.transform.rotation.eulerAngles.z > 30)//checking our rotation doesn't go crazy - Clair
         {
-            this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 5);
+            this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 30);
         }
-        else if (this.transform.rotation.eulerAngles.z < -5)
+        else if (this.transform.rotation.eulerAngles.z < -30)
         {
-            this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, -5);
+            this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, -30);
         }*/
 		//Temporary lock so we can't end up upside down- Clair
 		//A better way might be rounding down to ~30 or -30
@@ -102,30 +104,54 @@ public class PlayerMovement : MonoBehaviour {
 	//Clair's Stuff
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.name == "trigger1")
+		if (other.gameObject.name == "trigger1")// If we hit the starting line...
 		{
-			if (!RaceManagerScript.Singleton.HasStarted[playerId])
+			if (!RaceManagerScript.Singleton.HasStarted[playerId])//Either that player just started....
 			{
 				RaceManagerScript.Singleton.HasStarted[playerId] = true;
-			}else if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == 0)
+			}else if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == 0)//Or that player's lap counter goes up if they have hit all the previous triggers
 			{
 				RaceManagerScript.Singleton.lapCounts[playerId]++;
 			}
 		}
 
-        // TODO: it would be nice to comment this for other group members?
-       // Debug.Log("hit: " + other.gameObject.name);
-        if (other.gameObject.name == "trigger" + (RaceManagerScript.Singleton.LastCheckpoints[playerId] + 1) && RaceManagerScript.Singleton.LastCheckpoints[playerId]< RaceManagerScript.Singleton.triggers.Length - 1)
+       
+    if (other.gameObject.name == "trigger" + (RaceManagerScript.Singleton.LastCheckpoints[playerId] + 1) && RaceManagerScript.Singleton.LastCheckpoints[playerId]< RaceManagerScript.Singleton.triggers.Length - 1)//If we've hit the next trigger and won't go out of bounds of the array...
+    {
+        RaceManagerScript.Singleton.LastCheckpoints[playerId]++;//We have hit the next trigger, and can't cheese, this is all cheese prevention
+    }
+    if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == RaceManagerScript.Singleton.triggers.Length-1 && other.gameObject.name == "trigger" + RaceManagerScript.Singleton.triggers.Length)//If we have hit the last trigger before the starting line
+    {
+        RaceManagerScript.Singleton.LastCheckpoints[playerId] = 0;//Prepare the counter so we can go up a lap
+    }
+    if (other.gameObject.tag == "BananaTag" && !isInvincible)
         {
-            RaceManagerScript.Singleton.LastCheckpoints[playerId]++;
+            //Debug.Log("Collided w banan");
+            speed = .5f;
+            acceleration = 0f;
+            StartCoroutine(HitBanana());
+            
+            Destroy(other.gameObject);
+            
         }
-	    // TODO: it would be nice to check the actual length of the array or item count, instead of hard coding a length of 13 or 14 etc
-        if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == RaceManagerScript.Singleton.triggers.Length-1 && other.gameObject.name == "trigger" + RaceManagerScript.Singleton.triggers.Length)
-        {
-            RaceManagerScript.Singleton.LastCheckpoints[playerId] = 0;
-        }
-	    // TODO: again, just comment on what each chunk is doing?
-
 
 	}
+  IEnumerator HitBanana()
+    {
+        float duration = 1;
+        Quaternion StartRotation = transform.rotation;
+        float t = 0f;
+        while (t<duration)
+        {
+            transform.rotation = StartRotation * Quaternion.AngleAxis(t / duration * 720f, Vector3.up);
+            yield return null;
+            t += Time.deltaTime;
+        }
+        transform.rotation = StartRotation;
+        //Debug.Log("HitBanana() activated");
+        yield return new WaitForSeconds(1);
+        acceleration = 0.1f;
+    }
 }
+
+
