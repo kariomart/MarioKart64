@@ -38,7 +38,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
     // Use this for initialization
     void Start () {
         Instantiate(ItemBox, gameObject.transform.position, Quaternion.identity, gameObject.transform);
-        Instantiate(QMark, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+        Instantiate(QMark, gameObject.transform.position, Quaternion.identity, gameObject.transform);//It might be better to have the itembox instantiate this, or have the itembox be the parent and set world rotation as needed -Clair
 
         canGrabItem = true;
         xRot = Random.Range(-.4f, .4f);
