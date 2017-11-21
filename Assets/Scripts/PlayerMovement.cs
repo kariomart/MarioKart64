@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		/*if (this.transform.rotation.eulerAngles.x > 30)//checking our rotation doesn't go crazy - Clair
+        /*if (this.transform.rotation.eulerAngles.x > 30)//checking our rotation doesn't go crazy - Clair
         {
             this.transform.rotation = Quaternion.Euler(30, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
 
@@ -52,11 +52,12 @@ public class PlayerMovement : MonoBehaviour {
         {
             this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, -30);
         }*/
-		//Temporary lock so we can't end up upside down- Clair
-		//A better way might be rounding down to ~30 or -30
+        //Temporary lock so we can't end up upside down- Clair
+        //A better way might be rounding down to ~30 or -30
+        //this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, 0);
 
-		//We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
-		var x = Input.GetAxis("HorizontalP"+(playerId+1)) * Time.deltaTime * 150.0f;
+        //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
+        var x = Input.GetAxis("HorizontalP"+(playerId+1)) * Time.deltaTime * 150.0f;
 		transform.Rotate(0, x, 0);
 
 		//This one too - Clair
