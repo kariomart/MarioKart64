@@ -448,6 +448,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ade155f21e6b1dd4b94386c85ebe420b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Banana: {fileID: 1655457408872732, guid: b40c049f0bc059c4789ecab59fdb42fb, type: 2}
+  GreenShell: {fileID: 1216087674491220, guid: 2a4e9401211c7474aaaf161dd1a01344, type: 2}
+  shellSpeed: 500
+  hasItem: 0
+  currentItem: 1
   playerID: 0
 --- !u!1 &853207337
 GameObject:
