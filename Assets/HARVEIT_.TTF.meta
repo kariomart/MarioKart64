@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 5254994c8b11bd244b45d43d4b52805d
+timeCreated: 1510867127
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: HarvestItal
+  fontNames:
+  - HarvestItal
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
