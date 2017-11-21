@@ -170,7 +170,7 @@ public class PlayerMovement : MonoBehaviour {
         Quaternion StartRotation = transform.rotation;
         float t = 0f;
         rigid.constraints = RigidbodyConstraints.None; ;
-        rigid.AddForce(transform.up * 100);
+        rigid.AddForce(transform.up * 500);
         while (t < duration)
         {
             transform.rotation = StartRotation * Quaternion.AngleAxis(t / duration * 720f, Vector3.up);
