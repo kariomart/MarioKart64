@@ -3,33 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RaceManagerScript : MonoBehaviour {
-   
-
-   /*To do!
-    Display 1st and 2nd(No animation in MK64)
-    Display position based on tot distance (total lap length is the last item of triggerdist)
-    It's possible we can replace the original positioning system with totdist
-    Item fun times?
-         */
-    public static RaceManagerScript Singleton;
+ 
+    public static RaceManagerScript Singleton;//No spawning a second racemanager script! Bad!
 
 
 
-    public GameObject P1;
+    public GameObject P1;//Players
     public GameObject P2;
 
-    public RectTransform FirstMarker;
+    public RectTransform FirstMarker;//the UI element
     public RectTransform SecondMarker;
     //public Vector2 lapCounts;
-    public int[] lapCounts = { 0, 0 };
-    public int[] LastCheckpoints = { 0, 0 };
+    public int[] lapCounts = { 0, 0 };//Laps completed
+    public int[] LastCheckpoints = { 0, 0 };//Progress this lap
     public bool P1isFirst = true;
-    public Transform[] triggers = new Transform[14];
-    public float[] triggerDist = new float[14];
+    public Transform[] triggers = new Transform[14];//All of the triggers
+    public float[] triggerDist = new float[14];//The distance between them
 
-    public float[] TotDistances = { 0, 0 };
+    public float[] TotDistances = { 0, 0 };//TotalDistance
    
-    public bool[] HasStarted = { false, false };
+    public bool[] HasStarted = { false, false };//3 2 1 GO
 
     
     //public Vector3[] triggerPos = new Vector3[14];
@@ -37,14 +30,14 @@ public class RaceManagerScript : MonoBehaviour {
         Singleton = this;
 
         
-	// TODO: WHAT IS THIS DOING??? TELL US
-        for (int i = 0; i < triggers.Length; i++)//The distances in this array are CUMULATIVE. 
+        //We have to know how far we are within a lap to know who is in first. This is an array of distances between triggers.
+        for (int i = 0; i < triggers.Length; i++)//The distances in this array are CUMULATIVE so we don't need to loop through it.  IE the first element is the distance between the first and second trigger, element two is the total between first and third, etc
         {
             if (i == 0)
             {
                 triggerDist[i] = Vector3.Distance(triggers[i].position, triggers[i + 1].position);
             }
-            else if (i == 13)
+            else if (i == 13)//This one is just the total lap distance
             {
                 triggerDist[i] = triggerDist[i - 1] + Vector3.Distance(triggers[i].position, triggers[0].position);
             }
@@ -60,7 +53,7 @@ public class RaceManagerScript : MonoBehaviour {
         if (TotDistances[0] < TotDistances[1])// Whoever has covered more ground is first
         {
             P1isFirst = false;
-            SecondMarker.position = new Vector3(Screen.width*.1f, Screen.height*.65f,0);
+            SecondMarker.position = new Vector3(Screen.width*.1f, Screen.height*.65f,0);//Move the markers as needed
             FirstMarker.position = new Vector3(Screen.width * .1f, Screen.height * .1f, 0);
 
         }
