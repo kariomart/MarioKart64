@@ -6,19 +6,21 @@ public class PlayerItemSc : MonoBehaviour {
 
     PlayerMovement MovementSc;
     public GameObject Banana;
+    public GameObject GreenShell;
+    public GameObject BadCube;
     GameObject singleBanana;
     GameObject Trio1;
     GameObject Trio2;
     GameObject Trio3;
-    public GameObject GreenShell;
     GameObject SingleShell;
-    GameObject BadCube;
+    GameObject SingleBadCube;
     int TrioCount;
     public int shellSpeed = 30;
     public bool hasItem;
     public items currentItem;
     public int playerID = 0;
     Vector3 localForward;
+    public float boostValue;
     // Use this for initialization
     void Start () {
         MovementSc = transform.GetComponent<PlayerMovement>();
@@ -80,7 +82,11 @@ public class PlayerItemSc : MonoBehaviour {
             }
             else if (currentItem == items.badCube)
             {
-
+                SingleBadCube = Instantiate(BadCube, transform.position + (transform.forward * .8f), Quaternion.identity, gameObject.transform);
+            }
+            else if (currentItem == items.mushroom)
+            {
+                //MovementSc.Boost(boostValue);
             }
         }
         else if (hasItem == true && Input.GetButtonUp("FireP" + playerID))
@@ -156,6 +162,11 @@ public class PlayerItemSc : MonoBehaviour {
                     hasItem = false;
                 }
             }
+            else if (currentItem == items.badCube)
+            {
+                SingleBadCube.transform.parent = null;
+                hasItem = false;
+            }
         }
     }
 
@@ -165,8 +176,5 @@ public class PlayerItemSc : MonoBehaviour {
         currentItem = toEquip;
         hasItem = true;
     }
-    public void mushroomBoost()
-    {
-        //MovementSc.Boost();
-    }
+    
 }
