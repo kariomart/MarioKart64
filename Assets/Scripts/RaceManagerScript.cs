@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RaceManagerScript : MonoBehaviour {
- 
+    //should be understandable now guys! Enjoy -Clair
+
+
     public static RaceManagerScript Singleton;//No spawning a second racemanager script! Bad!
 
 
