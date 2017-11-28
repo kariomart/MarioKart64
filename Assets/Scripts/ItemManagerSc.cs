@@ -29,8 +29,10 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
     public float boxRegen;
     bool canGrabItem;
     int itemNum;
+    int playerID;
     public items assignedItem;
     public PlayerItemSc PlayerSc;
+    public PlayerMovement PlayerMovementSc;
     public float xRot;
     public float yRot;
     public float zRot;
@@ -67,6 +69,8 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         if (other.tag == "Player")
         {
             PlayerSc = other.GetComponent<PlayerItemSc>();
+            PlayerMovementSc = other.GetComponent<PlayerMovement>();
+            playerID = PlayerMovementSc.playerId;
             if (canGrabItem == true)
             {
 
@@ -80,12 +84,13 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
 
     IEnumerator BoxRegen()
     {
-        int posAtHit = playerPos;
         canGrabItem = false;
         startTimer = true;
         itemNum = Random.Range(0, 100);
-        if (posAtHit == 1)
+        Debug.Log(itemNum);
+        if (playerID == 0)
         {
+            Debug.Log("player1");
             if (itemNum >= 0 && itemNum < 25)
             {
                 //A item: green shell
@@ -104,7 +109,8 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
             else if (itemNum >= 50 && itemNum < 60)
             {
                 //boo
-                assignedItem = items.boo;
+                //assignedItem = items.boo;
+                assignedItem = items.banana;
             }
             else if (itemNum >= 50 && itemNum < 60)
             {
@@ -119,7 +125,8 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
             else if (itemNum >= 70 && itemNum < 80)
             {
                 //red shell
-                assignedItem = items.redShell;
+                //assignedItem = items.redShell;
+                assignedItem = items.greenShell;
             }
             else if (itemNum >= 90 && itemNum <= 100)
             {
@@ -127,17 +134,20 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
                 assignedItem = items.bananaBunch;
             }
         }
-        if (posAtHit == 2)
+        if (playerID == 1)
         {
+            Debug.Log("player2");
             if (itemNum >=0 && itemNum < 15)
             {
                 //b item: mushroom trio
-                assignedItem = items.mushroomTrio;
+                //assignedItem = items.mushroomTrio;
+                assignedItem = items.mushroom;
             }
             else if (itemNum >= 15 && itemNum < 30)
             {
                 //b item: golden mushroom
-                assignedItem = items.mushroomGolden;
+                //assignedItem = items.mushroomGolden;
+                assignedItem = items.mushroom;
             }
             else if (itemNum >= 30 && itemNum < 45)
             {
@@ -147,7 +157,8 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
             else if (itemNum >= 45 && itemNum < 60)
             {
                 //b item: invincibility star
-                assignedItem = items.invulnStar;
+                //assignedItem = items.invulnStar;
+                assignedItem = items.mushroom;
             }
             else if (itemNum >= 60 && itemNum < 68)
             {
@@ -157,17 +168,20 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
             else if (itemNum >= 68 && itemNum < 76)
             {
                 //C item: lightning
-                assignedItem = items.lightning;
+                //assignedItem = items.lightning;
+                assignedItem = items.greenShellTrio;
             }
             else if (itemNum >= 76 && itemNum < 84)
             {
                 //C item: blue shell
-                assignedItem = items.blueShell;
+                //assignedItem = items.blueShell;
+                assignedItem = items.greenShellTrio;
             }
             else if (itemNum >= 84 && itemNum < 92)
             {
                 //C item: red shell
-                assignedItem = items.redShell;
+                //assignedItem = items.redShell;
+                assignedItem = items.greenShell;
             }
             else if (itemNum >= 92 && itemNum <= 100)
             {
