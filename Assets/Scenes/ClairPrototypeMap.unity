@@ -2140,7 +2140,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 72.25
+      value: 71.98
       objectReference: {fileID: 0}
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2148,7 +2148,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -42.5
+      value: -35.24
       objectReference: {fileID: 0}
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2324,11 +2324,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.406
+      value: 1.19
       objectReference: {fileID: 0}
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -3.3939848
+      value: -0.38
       objectReference: {fileID: 0}
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4047,8 +4047,8 @@ MonoBehaviour:
   - 0
   - 0
   TotDistances:
-  - 0
-  - 0
+  - -100
+  - -100
   HasStarted: 0000
 --- !u!4 &1429973576
 Transform:
