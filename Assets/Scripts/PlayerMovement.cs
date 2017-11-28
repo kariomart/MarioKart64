@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour {
                 }
                 else if (speed <= .01f && speed >= maxReverse)
                 {
-                    Debug.Log("Heyo");
+                    
                     speed += acceleration * y;//Acceleration is positive, y is negative
                     //speed = maxReverse;
                 }
