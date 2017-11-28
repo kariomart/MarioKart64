@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float speed=0;
 	public float acceleration=.1f;
 	public float maxSpeed=10;
+    float maxReverse = -3f;
 
 	// TODO: if these are unused, you should say so, and/or remove them
 	bool left;
@@ -78,11 +79,17 @@ public class PlayerMovement : MonoBehaviour {
             else if (y < -.05)
             {//To distinguish between player slow down and no input - Clair
 
-                if (speed > 0)
+                if (speed > .01f)
                 {//If we are holding back but moving forward.... -Clair
 
                     speed *= 0.8f; // TODO: if this is a tuning value, I'd expose it as a specific var?
 
+                }
+                else if (speed <= .01f && speed >= maxReverse)
+                {
+                    Debug.Log("Heyo");
+                    speed += acceleration * y;//Acceleration is positive, y is negative
+                    //speed = maxReverse;
                 }
                 if (speed > maxSpeed)//If boostspeed is 1.5x max speed, boostspeed *.8 is still faster than max speed, meaning it would be optimal to decel after a boost without this check. -Clair
                 {
@@ -96,8 +103,11 @@ public class PlayerMovement : MonoBehaviour {
 
                     speed *= 0.9f; //We slow down 
 
+                }else if (speed < 0)
+                {
+                    speed += acceleration;
                 }
-                if (speed > maxSpeed)//If boostspeed is 1.5x max speed, boostspeed *.8 is still faster than max speed, meaning it would be optimal to decel after a boost without this check. -Clair
+                if (speed > maxSpeed)//If boostspeed is 1.5x max speed, boostspeed *.9 is still faster than max speed, meaning it would be optimal to decel after a boost without this check. -Clair
                 {
                     speed = maxSpeed;
                 }
@@ -208,6 +218,7 @@ public class PlayerMovement : MonoBehaviour {
         PlayerCamera.GetComponent<CameraController>().cameraLock = false;
         yield return new WaitForSeconds(1);
         acceleration = 0.1f;
+
        // rigid.constraints = RigidbodyConstraints.None;
 
     }
