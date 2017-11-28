@@ -1,3 +1,4 @@
+
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -87,7 +88,6 @@ public class PlayerMovement : MonoBehaviour {
                 }
                 else if (speed <= .01f && speed >= maxReverse)
                 {
-                    Debug.Log("Heyo");
                     speed += acceleration * y;//Acceleration is positive, y is negative
                     //speed = maxReverse;
                 }
@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour {
 	void FixedUpdate() {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(Flip());
+            //StartCoroutine(Flip());
         }
 
 
@@ -178,6 +178,16 @@ public class PlayerMovement : MonoBehaviour {
             StartCoroutine(Flip());
             Destroy(other.gameObject);
         }
+
+
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.tag == "shell")
+		{
+			StartCoroutine(Flip());
+		}
 	}
     
   public IEnumerator HitBanana()
