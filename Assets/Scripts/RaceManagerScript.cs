@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RaceManagerScript : MonoBehaviour {
- 
+    //should be understandable now guys! Enjoy -Clair
+
+
     public static RaceManagerScript Singleton;//No spawning a second racemanager script! Bad!
 
 
@@ -13,6 +16,7 @@ public class RaceManagerScript : MonoBehaviour {
 
     public RectTransform FirstMarker;//the UI element
     public RectTransform SecondMarker;
+    public Text countdown;// 3 2 1 GO!
     //public Vector2 lapCounts;
     public int[] lapCounts = { 0, 0 };//Laps completed
     public int[] LastCheckpoints = { 0, 0 };//Progress this lap
@@ -22,7 +26,7 @@ public class RaceManagerScript : MonoBehaviour {
 
     public float[] TotDistances = { 0, 0 };//TotalDistance
    
-    public bool[] HasStarted = { false, false };//3 2 1 GO
+    public bool[] HasStarted = { false, false };//Has Crossed the starting line
 
     
     //public Vector3[] triggerPos = new Vector3[14];
@@ -46,6 +50,7 @@ public class RaceManagerScript : MonoBehaviour {
                 triggerDist[i] = triggerDist[i - 1] + Vector3.Distance(triggers[i].position, triggers[i + 1].position);
             }
         }
+        StartCoroutine(Countdown());
 	}
 	
 	// Update is called once per frame
@@ -88,5 +93,56 @@ public class RaceManagerScript : MonoBehaviour {
                 TotDistances[1] = (lapCounts[1] * triggerDist[triggerDist.Length - 1]) + triggerDist[triggerDist.Length - 1] - Vector3.Distance(P2.transform.position, triggers[LastCheckpoints[1]].position);
             }
         }
+    }
+    IEnumerator Countdown()
+    {
+        /* countdown.text = "3";
+         yield return new WaitForSeconds(1f);//waits for 1 second
+         countdown.text = "2";
+         yield return new WaitForSeconds(1f);//waits for 1 second
+         countdown.text = "1";
+         yield return new WaitForSeconds(1f);*/
+        float p1boost=-100;
+        float p2boost=-100;
+
+        for (float t = 2.9999999f; t > 0f; t -= Time.deltaTime)//For 3 seconds
+        {
+            countdown.text =""+ (int) (t + 1);//Probably not optimal, but it feels really fancy
+            if (Input.GetAxis("AccelP1") > .5f&& t >.1f)
+            {
+                p1boost = t;//Record the last time they were holding accel
+                Debug.Log(t);
+            }
+            if (Input.GetAxis("AccelP2") > .5f && t > .1f)
+            {
+                p2boost = t;//Record the last frame they were holding accel
+            }
+            yield return 0; // VERY IMPORTANT: tell the coroutine to wait for a frame before continuing
+        }
+        countdown.GetComponent<Text>().text = "Go!";
+        Debug.Log("P1Boost time:" + p1boost);
+        Debug.Log("P2Boost time:" + p2boost);
+
+        P1.GetComponent<PlayerMovement>().CanGo = true;//It's silly, it works, no worries
+        P2.GetComponent<PlayerMovement>().CanGo = true;
+        if (p1boost > 1.25f && p1boost < 1.75f)
+        {
+            P1.GetComponent<PlayerMovement>().Boost(1.5f, 1f);//It's silly, it works, no worries
+        }else if (p1boost > 1f && p1boost < 2f)
+        {
+            P1.GetComponent<PlayerMovement>().Boost(1.3f, 1f);//It's silly, it works, no worries
+        }
+        if (p2boost > 1.25f && p1boost < 1.75f)
+        {
+            P2.GetComponent<PlayerMovement>().Boost(1.5f, 1f);//It's silly, it works, no worries
+        } else if (p2boost > 1f && p1boost < 2f)
+        {
+            P2.GetComponent<PlayerMovement>().Boost(1.3f, 1f);//It's silly, it works, no worries
+        }
+
+        yield return new WaitForSeconds(.5f);//waits for half a second
+        countdown.text = "";
+        
+
     }
 }

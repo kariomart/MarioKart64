@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShellScript : MonoBehaviour {
+public class shellScript : MonoBehaviour {
     Rigidbody shellRB;
     Vector3 oldVelocity;
     public PlayerMovement PlayerMoveSc;
@@ -12,6 +12,8 @@ public class ShellScript : MonoBehaviour {
     public float orbitDistance = 3.0f;
     public float orbitDegreesPerSec = 180.0f;
     public Vector3 relativeDistance = Vector3.zero;
+    bool isRed;
+    bool isBlue;
 
 
 
@@ -45,7 +47,7 @@ public class ShellScript : MonoBehaviour {
         if (collision.gameObject.tag != "Player")
         {
             int bounces = 0;
-            if (bounces <= 5)
+            if (bounces <= 5 && !isRed)
             {
                 ContactPoint contact = collision.contacts[0];
                 Vector3 reflectedVelocity = Vector3.Reflect(oldVelocity, contact.normal);
@@ -53,12 +55,14 @@ public class ShellScript : MonoBehaviour {
                 Quaternion rotation = Quaternion.FromToRotation(oldVelocity, reflectedVelocity);
                 transform.rotation = rotation * transform.rotation;
                 //Debug.Log("Bounces: " + bounces);
+                bounces += 1;
+                Debug.Log("bounces: " + bounces);
             }
             else
             {
                 Destroy(gameObject);
             }
-            bounces += 1;
+            
         }
         else
         {
