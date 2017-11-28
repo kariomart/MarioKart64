@@ -21,6 +21,7 @@ public class PlayerItemSc : MonoBehaviour {
     public int playerID = 0;
     Vector3 localForward;
     public float boostValue;
+    public bool canBoost;
     // Use this for initialization
     void Start () {
         MovementSc = transform.GetComponent<PlayerMovement>();
@@ -86,9 +87,22 @@ public class PlayerItemSc : MonoBehaviour {
             }
             else if (currentItem == items.mushroom)
             {
-                //MovementSc.Boost(boostValue);
+                MovementSc.Boost(1.5f,1);
+                hasItem = false;
             }
+            else if (currentItem == items.mushroomGolden)
+            {
+                StartCoroutine(GoldenTimer());
+                MovementSc.Boost(1.5f, 1);
+                hasItem = false;
+            }
+            
         }
+        /*else if (canBoost && Input.GetButtonDown("FireP" + playerID))
+        {
+            MovementSc.Boost(1.5f, 1);
+            Debug.Log("canboost");
+        }*/
         else if (hasItem == true && Input.GetButtonUp("FireP" + playerID))
         {
             if (currentItem == items.banana)
@@ -176,5 +190,11 @@ public class PlayerItemSc : MonoBehaviour {
         currentItem = toEquip;
         hasItem = true;
     }
-    
+    public IEnumerator GoldenTimer()
+    {
+        canBoost = true;
+        yield return new WaitForSeconds(3);
+        canBoost = false;
+    }
+
 }
