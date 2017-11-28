@@ -169,7 +169,7 @@ public class PlayerMovement : MonoBehaviour {
         }
 	}
     
-  IEnumerator HitBanana()
+  public IEnumerator HitBanana()
     {
         float duration = 1;
         Quaternion StartRotation = transform.rotation;
@@ -206,3 +206,11 @@ public class PlayerMovement : MonoBehaviour {
 }
 
 
+
+   public IEnumerator Flip()
+    {
+        float duration = 1;
+        Quaternion StartRotation = transform.rotation;
+        float t = 0f;
+        rigid.constraints = RigidbodyConstraints.None; ;
+        rigid.AddForce(transform.up * 500);
