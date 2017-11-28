@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour {
 	void FixedUpdate() {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(Flip());
+            //StartCoroutine(Flip());
         }
 
 
@@ -178,6 +178,16 @@ public class PlayerMovement : MonoBehaviour {
             StartCoroutine(Flip());
             Destroy(other.gameObject);
         }
+
+
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.tag == "shell")
+		{
+			StartCoroutine(Flip());
+		}
 	}
     
   public IEnumerator HitBanana()
