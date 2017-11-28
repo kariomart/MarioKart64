@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour {
     public bool CanGo = false;//Is this a silly way to handle this? Yes. Does it work in very few lines of code? Also yes. Set to true in RaceManager after 3 2 1.
     float boostDuration;
     float boostMultiplier;
+    public GameObject PlayerCamera;
 
 	// Use this for initialization
 	void Start () {
@@ -201,8 +202,11 @@ public class PlayerMovement : MonoBehaviour {
         float duration = 1;
         Quaternion StartRotation = transform.rotation;
         float t = 0f;
-        rigid.constraints = RigidbodyConstraints.None; ;
-        rigid.AddForce(transform.up * 100);
+        //rigid.constraints = RigidbodyConstraints.FreezePositionZ;
+        PlayerCamera.GetComponent<CameraController>().cameraLock = true;
+        rigid.AddForce(transform.up * 300);
+        acceleration = 0f;
+
         while (t < duration)
         {
             transform.rotation = StartRotation * Quaternion.AngleAxis(t / duration * 720f, Vector3.up);
@@ -211,6 +215,11 @@ public class PlayerMovement : MonoBehaviour {
         }
         transform.rotation = StartRotation;
         yield return new WaitForSeconds(1);
+        PlayerCamera.GetComponent<CameraController>().cameraLock = false;
+        yield return new WaitForSeconds(1);
         acceleration = 0.1f;
+
+       // rigid.constraints = RigidbodyConstraints.None;
+
     }
 }

@@ -14,7 +14,7 @@ public class shellScript : MonoBehaviour {
     public Vector3 relativeDistance = Vector3.zero;
     bool isRed;
     bool isBlue;
-
+    int bounces;
 
 
     // Use this for initialization
@@ -27,6 +27,7 @@ public class shellScript : MonoBehaviour {
         {
             relativeDistance = transform.position - rotTarget.position;
         }
+        bounces = 0;
     }
 
     void FixedUpdate()
@@ -46,7 +47,6 @@ public class shellScript : MonoBehaviour {
         }
         if (collision.gameObject.tag != "Player")
         {
-            int bounces = 0;
             if (bounces <= 5 && !isRed)
             {
                 ContactPoint contact = collision.contacts[0];
@@ -56,7 +56,7 @@ public class shellScript : MonoBehaviour {
                 transform.rotation = rotation * transform.rotation;
                 //Debug.Log("Bounces: " + bounces);
                 bounces += 1;
-                Debug.Log("bounces: " + bounces);
+                //Debug.Log("bounces: " + bounces);
             }
             else
             {
