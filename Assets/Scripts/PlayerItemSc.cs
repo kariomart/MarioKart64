@@ -46,15 +46,20 @@ public class PlayerItemSc : MonoBehaviour {
                     Trio3 = null;
                 }
 
-                Trio1 = Instantiate(Banana, transform.position - (transform.forward * .8f), Quaternion.identity, gameObject.transform);
-                Trio2 = Instantiate(Banana, transform.position - (transform.forward * 1), Quaternion.identity, gameObject.transform);
-                Trio3 = Instantiate(Banana, transform.position - (transform.forward * 1.2f), Quaternion.identity, gameObject.transform);
+                Trio1 = Instantiate(Banana, transform.position - (transform.forward * 2f), Quaternion.identity);
+                Trio1.transform.parent = transform;
+                Trio2 = Instantiate(Banana, transform.position - (transform.forward * 2.2f), Quaternion.identity);
+                Trio2.transform.parent = transform;
+                Trio3 = Instantiate(Banana, transform.position - (transform.forward * 2.4f), Quaternion.identity);
+                Trio3.transform.parent = transform;
+
             }
             else if (currentItem == items.greenShell)
             {
                 SingleShell = null;
 
-                SingleShell = Instantiate(GreenShell, transform.position + (transform.forward * 2), gameObject.transform.rotation, gameObject.transform);
+                SingleShell = Instantiate(GreenShell, transform.position + (transform.forward * 2), gameObject.transform.rotation);
+                SingleShell.transform.parent = transform;
                 SingleShell.GetComponent<Rigidbody>().isKinematic = true;
             }
             else if (currentItem == items.greenShellTrio && TrioCount == 0)
@@ -66,9 +71,12 @@ public class PlayerItemSc : MonoBehaviour {
                     Trio3 = null;
                 }
                 
-                Trio1 = Instantiate(GreenShell, transform.position + (transform.forward * 1.5f), Quaternion.identity, gameObject.transform);
-                Trio2 = Instantiate(GreenShell, transform.position + (transform.right * 1.5f), Quaternion.identity, gameObject.transform);
-                Trio3 = Instantiate(GreenShell, transform.position + (transform.right * -1.5f), Quaternion.identity, gameObject.transform);
+                Trio1 = Instantiate(GreenShell, transform.position + (transform.forward * 3f), Quaternion.identity);
+                Trio1.transform.parent = transform;
+                Trio2 = Instantiate(GreenShell, transform.position + (transform.right * 3f), Quaternion.identity);
+                Trio2.transform.parent = transform;
+                Trio3 = Instantiate(GreenShell, transform.position + (transform.right * -3f), Quaternion.identity);
+                Trio3.transform.parent = transform;
                 Trio1.GetComponent<shellScript>().isTrio = true;
                 Trio2.GetComponent<shellScript>().isTrio = true;
                 Trio3.GetComponent<shellScript>().isTrio = true;
@@ -83,7 +91,8 @@ public class PlayerItemSc : MonoBehaviour {
             }
             else if (currentItem == items.badCube)
             {
-                SingleBadCube = Instantiate(BadCube, transform.position + (transform.forward * .8f), Quaternion.identity, gameObject.transform);
+                SingleBadCube = Instantiate(BadCube, transform.position + (transform.forward * 2f), Quaternion.identity);
+                SingleBadCube.transform.parent = transform;
             }
             else if (currentItem == items.mushroom)
             {

@@ -64,6 +64,7 @@ public class shellScript : MonoBehaviour {
             }
             
         }
+        
         else
         {
             Destroy(gameObject);

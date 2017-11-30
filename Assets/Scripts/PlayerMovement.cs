@@ -181,16 +181,15 @@ public class PlayerMovement : MonoBehaviour {
 
 
 	}
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "shell")
+        {
+            StartCoroutine(Flip());
+        }
+    }
 
-	private void OnCollisionEnter(Collision collision)
-	{
-		if (collision.gameObject.tag == "shell")
-		{
-			StartCoroutine(Flip());
-		}
-	}
-    
-  public IEnumerator HitBanana()
+    public IEnumerator HitBanana()
     {
         float duration = 1;
         Quaternion StartRotation = transform.rotation;
