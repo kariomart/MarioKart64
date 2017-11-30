@@ -21,6 +21,7 @@ public class PlayerItemSc : MonoBehaviour {
     public int playerID = 0;
     Vector3 localForward;
     public float boostValue;
+    public bool canBoost;
     // Use this for initialization
     void Start () {
         MovementSc = transform.GetComponent<PlayerMovement>();
@@ -53,7 +54,7 @@ public class PlayerItemSc : MonoBehaviour {
             {
                 SingleShell = null;
 
-                SingleShell = Instantiate(GreenShell, transform.position + (transform.forward * 1), gameObject.transform.rotation, gameObject.transform);
+                SingleShell = Instantiate(GreenShell, transform.position + (transform.forward * 2), gameObject.transform.rotation, gameObject.transform);
                 SingleShell.GetComponent<Rigidbody>().isKinematic = true;
             }
             else if (currentItem == items.greenShellTrio && TrioCount == 0)
@@ -86,9 +87,22 @@ public class PlayerItemSc : MonoBehaviour {
             }
             else if (currentItem == items.mushroom)
             {
-                //MovementSc.Boost(boostValue);
+                MovementSc.Boost(1.5f,1);
+                hasItem = false;
             }
+            else if (currentItem == items.mushroomGolden)
+            {
+                StartCoroutine(GoldenTimer());
+                MovementSc.Boost(1.5f, 1);
+                hasItem = false;
+            }
+            
         }
+        /*else if (canBoost && Input.GetButtonDown("FireP" + playerID))
+        {
+            MovementSc.Boost(1.5f, 1);
+            Debug.Log("canboost");
+        }*/
         else if (hasItem == true && Input.GetButtonUp("FireP" + playerID))
         {
             if (currentItem == items.banana)
@@ -136,7 +150,7 @@ public class PlayerItemSc : MonoBehaviour {
                 else if (TrioCount == 3)
                 {
                     Trio3.GetComponent<shellScript>().isTrio = false;
-                    Trio3.transform.position = transform.position + (transform.forward * 1.2f);
+                    Trio3.transform.position = transform.position + (transform.forward * 2f);
                     Trio3.transform.parent = null;
                     Trio3.GetComponent<Rigidbody>().isKinematic = false;
                     Trio3.GetComponent<Rigidbody>().velocity = SingleShell.transform.forward * shellSpeed;
@@ -145,7 +159,7 @@ public class PlayerItemSc : MonoBehaviour {
                 else if (TrioCount == 2)
                 {
                     Trio2.GetComponent<shellScript>().isTrio = false;
-                    Trio2.transform.position = transform.position + (transform.forward * 1.2f);
+                    Trio2.transform.position = transform.position + (transform.forward * 2f);
                     Trio2.transform.parent = null;
                     Trio2.GetComponent<Rigidbody>().isKinematic = false;
                     Trio2.GetComponent<Rigidbody>().velocity = SingleShell.transform.forward * shellSpeed;
@@ -154,7 +168,7 @@ public class PlayerItemSc : MonoBehaviour {
                 else if (TrioCount == 1)
                 {
                     Trio1.GetComponent<shellScript>().isTrio = false;
-                    Trio1.transform.position = transform.position + (transform.forward * 1.2f);
+                    Trio1.transform.position = transform.position + (transform.forward * 2f);
                     Trio1.transform.parent = null;
                     Trio1.GetComponent<Rigidbody>().isKinematic = false;
                     Trio1.GetComponent<Rigidbody>().velocity = SingleShell.transform.forward * shellSpeed;
@@ -176,5 +190,11 @@ public class PlayerItemSc : MonoBehaviour {
         currentItem = toEquip;
         hasItem = true;
     }
-    
+    public IEnumerator GoldenTimer()
+    {
+        canBoost = true;
+        yield return new WaitForSeconds(3);
+        canBoost = false;
+    }
+
 }

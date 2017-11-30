@@ -24,7 +24,7 @@ public class RaceManagerScript : MonoBehaviour {
     public Transform[] triggers = new Transform[14];//All of the triggers
     public float[] triggerDist = new float[14];//The distance between them
 
-    public float[] TotDistances = { 0, 0 };//TotalDistance
+    public float[] TotDistances = { -100, -100 };//TotalDistance
    
     public bool[] HasStarted = { false, false };//Has Crossed the starting line
 
