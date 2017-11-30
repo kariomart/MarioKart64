@@ -8,6 +8,7 @@ public class shellScript : MonoBehaviour {
     public PlayerMovement PlayerMoveSc;
     public bool isTrio;
     public bool isLaunched;
+    public bool finishedLaunch;
     public Transform rotTarget;
     public float orbitDistance = 3.0f;
     public float orbitDegreesPerSec = 180.0f;
@@ -22,6 +23,7 @@ public class shellScript : MonoBehaviour {
         shellRB = gameObject.GetComponent<Rigidbody>();
         shellRB.freezeRotation = true;
         isLaunched = true;
+        finishedLaunch = false;
         rotTarget = transform.parent;
         if (rotTarget != null)
         {
@@ -37,15 +39,60 @@ public class shellScript : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+        //Avoid collision with ground code
+        Ray castDown = new Ray(transform.position, Vector3.down);
+        float maxRayDistance = 1f;
+        RaycastHit hitFloor;
+        Debug.DrawRay(castDown.origin, castDown.direction * maxRayDistance, Color.yellow);
+        if (Physics.Raycast(castDown, out hitFloor))
+        {
+           // Debug.Log("grounded check hit something");
+            transform.position = new Vector3(transform.position.x, hitFloor.point.y+.5f,transform.position.z);
+        }
+        else
+        {
+            //Debug.Log("grounded check hit nothing");
+            
+        }
+
+        if (isRed)
+        {
+            //tracking code goes here
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Shell")
         {
-            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+            if (finishedLaunch == false)
+            {
+                Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+            }
+            if (finishedLaunch == true)
+            {
+                Physics.IgnoreCollision(collision.collider, GetComponent<Collider>(), false);
+
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+
+            }
         }
-        if (collision.gameObject.tag != "Player")
+        else if (collision.gameObject.tag == "Player")
+        {
+            if (finishedLaunch == false)
+            {
+                Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+            }
+            else if (finishedLaunch == true)
+            {
+                collision.gameObject.GetComponent<PlayerMovement>().Flip();
+                Destroy(gameObject);
+            }
+
+        }
+        else
         {
             if (bounces <= 5 && !isRed)
             {
@@ -62,14 +109,9 @@ public class shellScript : MonoBehaviour {
             {
                 Destroy(gameObject);
             }
-            
+
         }
-        
-        else
-        {
-            Destroy(gameObject);
-            PlayerMoveSc = collision.gameObject.GetComponent<PlayerMovement>();
-        }
+  
     }
 
     void Orbit()
@@ -88,6 +130,15 @@ public class shellScript : MonoBehaviour {
         {
             Orbit();
         }
+    }
+    public void StartFreeStart()
+    {
+        StartCoroutine(FreeStart());
+    }
+    public IEnumerator FreeStart() //disables collisions with player and rotating shells immediately after launch
+    {
+        yield return new WaitForSeconds(.3f);
+        finishedLaunch = false;
     }
 }
 

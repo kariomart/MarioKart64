@@ -71,15 +71,22 @@ public class PlayerItemSc : MonoBehaviour {
                     Trio3 = null;
                 }
                 
-                Trio1 = Instantiate(GreenShell, transform.position + (transform.forward * 3f), Quaternion.identity);
+                Trio1 = Instantiate(GreenShell, transform.position + (transform.forward * 3f), gameObject.transform.rotation);
+                Trio2 = Instantiate(GreenShell, transform.position + (transform.right * 3f), gameObject.transform.rotation);
+                Trio3 = Instantiate(GreenShell, transform.position + (transform.right * -3f), gameObject.transform.rotation);
+
                 Trio1.transform.parent = transform;
-                Trio2 = Instantiate(GreenShell, transform.position + (transform.right * 3f), Quaternion.identity);
                 Trio2.transform.parent = transform;
-                Trio3 = Instantiate(GreenShell, transform.position + (transform.right * -3f), Quaternion.identity);
                 Trio3.transform.parent = transform;
+
+                Trio1.GetComponent<Rigidbody>().isKinematic = true;
+                Trio2.GetComponent<Rigidbody>().isKinematic = true;
+                Trio3.GetComponent<Rigidbody>().isKinematic = true;
+
                 Trio1.GetComponent<shellScript>().isTrio = true;
                 Trio2.GetComponent<shellScript>().isTrio = true;
                 Trio3.GetComponent<shellScript>().isTrio = true;
+
             }
             else if (currentItem == items.redShell)
             {
@@ -146,6 +153,7 @@ public class PlayerItemSc : MonoBehaviour {
             else if (currentItem == items.greenShell)
             {
                 SingleShell.transform.parent = null;
+                SingleShell.GetComponent<shellScript>().StartFreeStart();
                 SingleShell.GetComponent<Rigidbody>().isKinematic = false;
                 SingleShell.GetComponent<Rigidbody>().velocity = SingleShell.transform.forward*shellSpeed;
                 hasItem = false;
@@ -159,29 +167,32 @@ public class PlayerItemSc : MonoBehaviour {
                 else if (TrioCount == 3)
                 {
                     Trio3.GetComponent<shellScript>().isTrio = false;
-                    Trio3.transform.position = transform.position + (transform.forward * 2f);
                     Trio3.transform.parent = null;
+                    Trio3.GetComponent<shellScript>().StartFreeStart();
+                    Trio3.transform.position = transform.position + (transform.forward * 2f);
                     Trio3.GetComponent<Rigidbody>().isKinematic = false;
-                    Trio3.GetComponent<Rigidbody>().velocity = SingleShell.transform.forward * shellSpeed;
+                    Trio3.GetComponent<Rigidbody>().velocity = Trio3.transform.forward * shellSpeed;
                     TrioCount--;
                 }
                 else if (TrioCount == 2)
                 {
                     Trio2.GetComponent<shellScript>().isTrio = false;
-                    Trio2.transform.position = transform.position + (transform.forward * 2f);
                     Trio2.transform.parent = null;
+                    Trio2.GetComponent<shellScript>().StartFreeStart();
+                    Trio2.transform.position = transform.position + (transform.forward * 2f);
                     Trio2.GetComponent<Rigidbody>().isKinematic = false;
-                    Trio2.GetComponent<Rigidbody>().velocity = SingleShell.transform.forward * shellSpeed;
+                    Trio2.GetComponent<Rigidbody>().velocity = Trio2.transform.forward * shellSpeed;
                     TrioCount--;
                 }
                 else if (TrioCount == 1)
                 {
                     Trio1.GetComponent<shellScript>().isTrio = false;
-                    Trio1.transform.position = transform.position + (transform.forward * 2f);
                     Trio1.transform.parent = null;
+                    Trio1.GetComponent<shellScript>().StartFreeStart();
+                    Trio1.transform.position = transform.position + (transform.forward * 2f);
                     Trio1.GetComponent<Rigidbody>().isKinematic = false;
-                    Trio1.GetComponent<Rigidbody>().velocity = SingleShell.transform.forward * shellSpeed;
-                    TrioCount = 0;
+                    Trio1.GetComponent<Rigidbody>().velocity = Trio1.transform.forward * shellSpeed;
+                    TrioCount--;
                     hasItem = false;
                 }
             }
