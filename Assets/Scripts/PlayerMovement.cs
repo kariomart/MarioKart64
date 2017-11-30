@@ -186,6 +186,11 @@ public class PlayerMovement : MonoBehaviour {
         if (collision.gameObject.tag == "shell")
         {
             StartCoroutine(Flip());
+            if (collision.gameObject != null)
+            {
+                Destroy(collision.gameObject);
+            }
+            
         }
     }
 

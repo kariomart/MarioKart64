@@ -98,7 +98,8 @@ public class PlayerItemSc : MonoBehaviour {
             }
             else if (currentItem == items.badCube)
             {
-                SingleBadCube = Instantiate(BadCube, transform.position + (transform.forward * 2f), Quaternion.identity);
+                SingleBadCube = Instantiate(BadCube, transform.position + (transform.forward * -2f), Quaternion.identity);
+                Physics.IgnoreCollision(SingleBadCube.GetComponent<Collider>(), GetComponent<Collider>());
                 SingleBadCube.transform.parent = transform;
             }
             else if (currentItem == items.mushroom)
@@ -200,6 +201,7 @@ public class PlayerItemSc : MonoBehaviour {
             {
                 SingleBadCube.transform.parent = null;
                 hasItem = false;
+                StartCoroutine(BadCubeCollideTrue());
             }
         }
     }
@@ -215,6 +217,12 @@ public class PlayerItemSc : MonoBehaviour {
         canBoost = true;
         yield return new WaitForSeconds(3);
         canBoost = false;
+    }
+    public IEnumerator BadCubeCollideTrue()
+    {
+        yield return new WaitForSeconds(1);
+        Physics.IgnoreCollision(SingleBadCube.GetComponent<Collider>(), GetComponent<Collider>(), false);
+        Debug.Log("CanCollideWithCube!");
     }
 
 }
