@@ -181,6 +181,7 @@ public class PlayerItemSc : MonoBehaviour {
             else if (currentItem == items.greenShell)
             {
                 SingleShell.transform.parent = null;
+                
                 SingleShell.GetComponent<shellScript>().StartFreeStart();
                 SingleShell.GetComponent<Rigidbody>().isKinematic = false;
                 SingleShell.GetComponent<Rigidbody>().velocity = SingleShell.transform.forward*shellSpeed;
