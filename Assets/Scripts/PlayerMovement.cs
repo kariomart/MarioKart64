@@ -225,13 +225,7 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-	private void OnCollisionEnter(Collision collision)
-	{
-		if (collision.gameObject.tag == "shell")
-		{
-			StartCoroutine(Flip());
-		}
-	}
+
     
   public IEnumerator HitBanana()
     {
