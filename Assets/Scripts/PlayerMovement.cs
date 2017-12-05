@@ -15,15 +15,6 @@ public class PlayerMovement : MonoBehaviour {
 	public float speed=0;
 	public float acceleration=.1f;
 	public float maxSpeed=10;
-    float maxReverse = -3f;
-
-	// TODO: if these are unused, you should say so, and/or remove them
-	bool left;
-	bool right;
-	bool space; 
-
-	// TODO: what is "power"? what does this do? it's not clear
-	float power;
 
 	Vector3 inputVector;
 	//Clair's Variables
@@ -31,6 +22,16 @@ public class PlayerMovement : MonoBehaviour {
     public bool CanGo = false;//Is this a silly way to handle this? Yes. Does it work in very few lines of code? Also yes. Set to true in RaceManager after 3 2 1.
     float boostDuration;
     float boostMultiplier;
+    public bool[] drifting = { false, false };//If Drifting, False = left True = Right
+    bool hopping = false;
+    float maxReverse = -3f;
+    //Borrowing this name convention from the original implementation, we really should fix this -Clair
+    float x;//Turning, between -1 and 1
+    float y;//acceleration
+    float z;//Triggers
+
+
+
     public GameObject PlayerCamera;
 
 	// Use this for initialization
@@ -48,11 +49,26 @@ public class PlayerMovement : MonoBehaviour {
 
             //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
 
-            var x = Input.GetAxis("HorizontalP" + (playerId + 1)) * Time.deltaTime * 150.0f;
-            transform.Rotate(0, x, 0);
+            x = Input.GetAxis("HorizontalP" + (playerId + 1)) * Time.deltaTime * 150.0f;
+            if (!drifting[0])
+            {
+                transform.Rotate(0, x / 2, 0);
+            }else
+            {
+                if (!drifting[1])
+                {
+                    transform.Rotate(0, (x - .55f) / 2, 0);
+                }
+                else
+                {
+                    transform.Rotate(0, (x + .55f) / 2, 0);
+                }
+            }
 
             //This one too - Clair
-            var y = Input.GetAxis("AccelP" + (playerId + 1));
+            y = Input.GetAxis("AccelP" + (playerId + 1));
+
+            z = Input.GetAxis("TriggersP" + (playerId + 1));
 
             if (boostDuration > 0)//Boosting is > everything - Clair
             {
@@ -113,6 +129,27 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
 
+
+            //Drifting code below -Clair
+
+            if (z > .05f&&!hopping&&!drifting[0]) {
+
+                rigid.AddForce(new Vector3(0, 3, 0), ForceMode.VelocityChange);
+                hopping = true;
+
+            }else if (z <= .05f)
+            {
+                drifting[0] = false;
+            }
+
+
+            //This should rotate the player based on the normal of the terrain below - Clair
+
+
+
+
+
+
             // TODO: is it intentional to not use CharacterController or Rigidbody here? are you sure you don't need collision?
             // TODO: is the road completely flat?
             //transform.Translate (0, 0, 1 * speed * Time.deltaTime);
@@ -124,6 +161,7 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //StartCoroutine(Flip());
+            hopping = false;
         }
 
 
@@ -181,14 +219,41 @@ public class PlayerMovement : MonoBehaviour {
 
 
 	}
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "shell")
+        {
+            StartCoroutine(Flip());
+            if (collision.gameObject != null)
+            {
+                Destroy(collision.gameObject);
+            }
+            
+        }
+        if (collision.gameObject.tag == "ground")//Clair's enter drift code
+        {
+            hopping = false;
+            if (z > .1)//If we are still holding a trigger after the hop
+            {
+                drifting[0] = true;//We are drifting
+                if (x > .1)//If we are turning right
+                {
+                    drifting[1] = true;//We are drifting right
+                }
+                else if (x < -.1)//Left edition
+                {
+                    drifting[1] = false;
+                }
+                else//But if the values are low then it was probably accidental, and the axis is returning to 0
+                {
+                    drifting[0] = false;//So we are not drifting
+                }
+            }
+        }
+    }
 
-	private void OnCollisionEnter(Collision collision)
-	{
-		if (collision.gameObject.tag == "shell")
-		{
-			StartCoroutine(Flip());
-		}
-	}
+
+
     
   public IEnumerator HitBanana()
     {

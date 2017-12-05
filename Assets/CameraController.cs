@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("Cameralock = " + cameraLock);
+        //Debug.Log("Cameralock = " + cameraLock);
         if (!cameraLock)
         {
             Transform target = player.transform;
