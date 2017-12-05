@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33844080366862442}
   - component: {fileID: 23702370256959688}
   - component: {fileID: 114770412162759422}
+  - component: {fileID: 65366883472196434}
   m_Layer: 0
   m_Name: BadItemBox
   m_TagString: Shell
@@ -81,6 +82,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1175392847205182}
   m_Mesh: {fileID: 4300000, guid: 3df5ab60b3b08c74a9abd5413eba6a52, type: 3}
+--- !u!65 &65366883472196434
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1175392847205182}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.048809, y: 1.2916431, z: 1.0867515}
+  m_Center: {x: 0, y: 0.000000029802322, z: 0.000000029802322}
 --- !u!114 &114770412162759422
 MonoBehaviour:
   m_ObjectHideFlags: 1
