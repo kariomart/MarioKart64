@@ -436,7 +436,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -10.644706
+      value: -13.96
       objectReference: {fileID: 0}
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalPosition.y
@@ -444,7 +444,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 24.746014
+      value: 24.62
       objectReference: {fileID: 0}
     - target: {fileID: 4172557392158992, guid: b5df76e1071561a45b7ed164b7a311dd, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2586,10 +2586,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInvincible: 0
   speed: 0
-  acceleration: 0.05
+  acceleration: 0.075
   maxSpeed: 10
   playerId: 0
   CanGo: 0
+  drifting: 0000
   PlayerCamera: {fileID: 1879453584}
 --- !u!54 &986861903
 Rigidbody:
@@ -2740,7 +2741,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.089
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3457,6 +3458,14 @@ Prefab:
     - target: {fileID: 100052, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 100056, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_TagString
+      value: ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 100066, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_TagString
+      value: ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
@@ -5770,10 +5779,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInvincible: 0
   speed: 0
-  acceleration: 0.05
+  acceleration: 0.075
   maxSpeed: 10
   playerId: 1
   CanGo: 0
+  drifting: 0000
   PlayerCamera: {fileID: 1469057391}
 --- !u!1 &1868252587
 GameObject:
