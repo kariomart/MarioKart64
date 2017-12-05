@@ -1152,6 +1152,42 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e184051832874964791bd39b1344b096, type: 2}
+    - target: {fileID: 400012, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300042, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a3671e0d028d51a4a891e9f35520ca91, type: 2}
+    - target: {fileID: 2300052, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2af439574eb071341a7838f33449c001, type: 2}
+    - target: {fileID: 2300032, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d2b831405e4c4c47991c05772bece7b, type: 2}
+    - target: {fileID: 2300034, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 39dee41487c0ba4449ec3753bf51ada0, type: 2}
+    - target: {fileID: 400066, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300054, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400074, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300056, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d588d7c6b5b5cbc47a480607614270c4, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
   m_IsPrefabParent: 0
@@ -1355,6 +1391,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   P1: {fileID: 986861897}
   P2: {fileID: 1829379206}
+  FirstMarker: {fileID: 0}
+  SecondMarker: {fileID: 0}
+  countdown: {fileID: 0}
   lapCounts: 0000000000000000
   LastCheckpoints: 0000000000000000
   P1isFirst: 1
