@@ -223,7 +223,28 @@ public class PlayerMovement : MonoBehaviour {
             }
             
         }
+        if (collision.gameObject.tag == "ground")//Clair's enter drift code
+        {
+            hopping = false;
+            if (z > .1)//If we are still holding a trigger after the hop
+            {
+                drifting[0] = true;//We are drifting
+                if (x > .1)//If we are turning right
+                {
+                    drifting[1] = true;//We are drifting right
+                }
+                else if (x < -.1)//Left edition
+                {
+                    drifting[1] = false;
+                }
+                else//But if the values are low then it was probably accidental, and the axis is returning to 0
+                {
+                    drifting[0] = false;//So we are not drifting
+                }
+            }
+        }
     }
+
 
 
     
@@ -270,25 +291,3 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 }
-
-        if(collision.gameObject.tag == "ground")//Clair's enter drift code
-        {
-            hopping = false;
-            if (z > .1)//If we are still holding a trigger after the hop
-            {
-                drifting[0] = true;//We are drifting
-                if (x > .1)//If we are turning right
-                {
-                    drifting[1] = true;//We are drifting right
-                }else if (x < -.1)//Left edition
-                {
-                    drifting[1] = false;
-                }else//But if the values are low then it was probably accidental, and the axis is returning to 0
-                {
-                    drifting[0] = false;//So we are not drifting
-                }
-            }
-        }
-	}
-    
-  public IEnumerator HitBanana()
