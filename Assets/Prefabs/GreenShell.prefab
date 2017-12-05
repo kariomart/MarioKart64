@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 114303540251544564}
   m_Layer: 0
   m_Name: GreenShell
-  m_TagString: Untagged
+  m_TagString: Shell
   m_Icon: {fileID: -2349822300998112484, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -369,6 +369,7 @@ MonoBehaviour:
   PlayerMoveSc: {fileID: 0}
   isTrio: 0
   isLaunched: 0
+  finishedLaunch: 0
   rotTarget: {fileID: 0}
   orbitDistance: 3
   orbitDegreesPerSec: 180

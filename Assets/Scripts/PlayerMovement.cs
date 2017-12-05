@@ -190,39 +190,26 @@ public class PlayerMovement : MonoBehaviour {
 			}
 		}
 
-       
-    if (other.gameObject.name == "trigger" + (RaceManagerScript.Singleton.LastCheckpoints[playerId] + 1) && RaceManagerScript.Singleton.LastCheckpoints[playerId]< RaceManagerScript.Singleton.triggers.Length - 1)//If we've hit the next trigger and won't go out of bounds of the array...
-    {
-        RaceManagerScript.Singleton.LastCheckpoints[playerId]++;//We have hit the next trigger, and can't cheese, this is all cheese prevention
-    }
-    if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == RaceManagerScript.Singleton.triggers.Length-1 && other.gameObject.name == "trigger" + RaceManagerScript.Singleton.triggers.Length)//If we have hit the last trigger before the starting line
-    {
-        RaceManagerScript.Singleton.LastCheckpoints[playerId] = 0;//Prepare the counter so we can go up a lap
-    }
-    if (other.gameObject.tag == "BananaTag" && !isInvincible)
+        if (other.gameObject.name == "trigger" + (RaceManagerScript.Singleton.LastCheckpoints[playerId] + 1) && RaceManagerScript.Singleton.LastCheckpoints[playerId]< RaceManagerScript.Singleton.triggers.Length - 1)//If we've hit the next trigger and won't go out of bounds of the array...
         {
-            //Debug.Log("Collided w banan");
-            speed = .5f;
-            acceleration = 0f;
-            StartCoroutine(HitBanana());
-            
-            Destroy(other.gameObject);
-            
+            RaceManagerScript.Singleton.LastCheckpoints[playerId]++;//We have hit the next trigger, and can't cheese, this is all cheese prevention
         }
-    if (other.gameObject.tag == "Shell")
+
+        if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == RaceManagerScript.Singleton.triggers.Length-1 && other.gameObject.name == "trigger" + RaceManagerScript.Singleton.triggers.Length)//If we have hit the last trigger before the starting line
         {
-            speed = .5f;
-            acceleration = 0f;
-            StartCoroutine(Flip());
-            Destroy(other.gameObject);
+            RaceManagerScript.Singleton.LastCheckpoints[playerId] = 0;//Prepare the counter so we can go up a lap
         }
+
+        
 
 
 	}
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "shell")
+        if (collision.gameObject.tag == "Shell")
         {
+            speed = .5f;
+            acceleration = 0f;
             StartCoroutine(Flip());
             if (collision.gameObject != null)
             {
@@ -230,6 +217,17 @@ public class PlayerMovement : MonoBehaviour {
             }
             
         }
+        if (collision.gameObject.tag == "BananaTag" && !isInvincible)
+        {
+            //Debug.Log("Collided w banan");
+            speed = .5f;
+            acceleration = 0f;
+            StartCoroutine(HitBanana());
+
+            Destroy(collision.gameObject);
+
+        }
+        
         if (collision.gameObject.tag == "ground")//Clair's enter drift code
         {
             hopping = false;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public enum items
 {
     greenShell,
@@ -36,12 +37,16 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
     public float xRot;
     public float yRot;
     public float zRot;
+    public GameObject P1ItemText;
+    public GameObject P2ItemText;
+
 
     // Use this for initialization
     void Start () {
         Instantiate(ItemBox, gameObject.transform.position, Quaternion.identity, gameObject.transform);
         Instantiate(QMark, gameObject.transform.position, Quaternion.identity, gameObject.transform);//It might be better to have the itembox instantiate this, or have the itembox be the parent and set world rotation as needed -Clair
-
+        P1ItemText = GameObject.Find("P1ItemText");
+        P2ItemText = GameObject.Find("P2ItemText");
         canGrabItem = true;
         xRot = Random.Range(-.4f, .4f);
         if (xRot <= 0)
@@ -73,7 +78,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
             playerID = PlayerMovementSc.playerId;
             if (canGrabItem == true)
             {
-
+                
                 Destroy(transform.GetChild(0).gameObject);
                 Destroy(transform.GetChild(1).gameObject);
                 StartCoroutine(BoxRegen());
@@ -88,7 +93,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         startTimer = true;
         itemNum = Random.Range(0, 100);
         Debug.Log(itemNum);
-        if (playerID == 0)
+        /*if (playerID == 0)
         {
             Debug.Log("player1");
             if (itemNum >= 0 && itemNum < 25)
@@ -188,10 +193,49 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
                 //C item: green shell trio
                 assignedItem = items.greenShellTrio;
             }
+        }*/
+        //The following is an alternate item roulette for the items we currently have working
+        if (itemNum >= 0 && itemNum < 25)
+        {
+            //A item: green shell
+            assignedItem = items.greenShell;
+        }
+        else if (itemNum >= 25 && itemNum < 40)
+        {
+            //B item: banana
+            assignedItem = items.banana;
+        }
+        else if (itemNum >= 40 && itemNum < 50)
+        {
+            //mushroom
+            assignedItem = items.mushroom;
+        }
+        else if (itemNum >= 50 && itemNum < 60)
+        {
+            //upside down q mark cube
+            assignedItem = items.badCube;
+        }
+        else if (itemNum >= 60 && itemNum < 80)
+        {
+            //green shell trio
+            assignedItem = items.greenShellTrio;
+        }
+        else if (itemNum >= 80 && itemNum <= 100)
+        {
+            //banana bunch
+            assignedItem = items.bananaBunch;
         }
         Debug.Log("Roll: " + itemNum);
         Debug.Log("Assigned item: " + assignedItem);
         PlayerSc.equipItem(assignedItem);
+        if (playerID == 0)
+        {
+            P1ItemText.GetComponent<Text>().text = "" + assignedItem;
+        }
+        else if (playerID == 1)
+        {
+            P2ItemText.GetComponent<Text>().text = "" + assignedItem;
+        }
         xRot = Random.Range(0.1f, .4f);
         yRot = -yRot;
         zRot = Random.Range(0.5f, .8f);
