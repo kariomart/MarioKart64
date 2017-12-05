@@ -212,15 +212,18 @@ public class PlayerMovement : MonoBehaviour {
 
 
 	}
-
-	private void OnCollisionEnter(Collision collision)
-	{
-		if (collision.gameObject.tag == "shell")
-		{
-			StartCoroutine(Flip());
-		}
-
-        if(collision.gameObject.tag == "ground")//Clair's enter drift code
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "shell")
+        {
+            StartCoroutine(Flip());
+            if (collision.gameObject != null)
+            {
+                Destroy(collision.gameObject);
+            }
+            
+        }
+        if (collision.gameObject.tag == "ground")//Clair's enter drift code
         {
             hopping = false;
             if (z > .1)//If we are still holding a trigger after the hop
@@ -229,16 +232,21 @@ public class PlayerMovement : MonoBehaviour {
                 if (x > .1)//If we are turning right
                 {
                     drifting[1] = true;//We are drifting right
-                }else if (x < -.1)//Left edition
+                }
+                else if (x < -.1)//Left edition
                 {
                     drifting[1] = false;
-                }else//But if the values are low then it was probably accidental, and the axis is returning to 0
+                }
+                else//But if the values are low then it was probably accidental, and the axis is returning to 0
                 {
                     drifting[0] = false;//So we are not drifting
                 }
             }
         }
-	}
+    }
+
+
+
     
   public IEnumerator HitBanana()
     {
