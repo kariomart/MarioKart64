@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour {
     public bool CanGo = false;//Is this a silly way to handle this? Yes. Does it work in very few lines of code? Also yes. Set to true in RaceManager after 3 2 1.
     float boostDuration;
     float boostMultiplier;
-    bool[] drifting = { false, false };//If Drifting, False = left True = Right
+    public bool[] drifting = { false, false };//If Drifting, False = left True = Right
     bool hopping = false;
     float maxReverse = -3f;
     //Borrowing this name convention from the original implementation, we really should fix this -Clair
@@ -141,6 +141,13 @@ public class PlayerMovement : MonoBehaviour {
             {
                 drifting[0] = false;
             }
+
+
+            //This should rotate the player based on the normal of the terrain below - Clair
+
+
+
+
 
 
             // TODO: is it intentional to not use CharacterController or Rigidbody here? are you sure you don't need collision?
