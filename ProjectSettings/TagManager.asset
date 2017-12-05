@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BananaTag
   - Shell
+  - ground
   layers:
   - Default
   - TransparentFX
