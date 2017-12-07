@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-//HEY! HEY LISTEN! We need to multiply things by delta time guys, or there could be unintended behavior on low powered machines. - Clair  
 
   //items stuff
   public bool isInvincible;
@@ -23,8 +22,20 @@ public class PlayerMovement : MonoBehaviour {
     float boostDuration;
     float boostMultiplier;
     public bool[] drifting = { false, false };//If Drifting, False = left True = Right
-    bool hopping = false;
+    public bool hopping = false;
     float maxReverse = -3f;
+
+    public Vector3 upDir;//For the normal based rotation - Clair
+    public Transform backLeft;
+    public Transform backRight;
+    public Transform frontLeft;//-0.65, - , .452
+    public Transform frontRight;
+    public RaycastHit lr;
+    public RaycastHit rr;
+    public RaycastHit lf;
+    public RaycastHit rf;
+
+
     //Borrowing this name convention from the original implementation, we really should fix this -Clair
     float x;//Turning, between -1 and 1
     float y;//acceleration
@@ -43,6 +54,43 @@ public class PlayerMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+       
+
+
+            //This should rotate the player based on the normal of the terrain below - Clair
+
+            /*Physics.Raycast(backLeft.position + Vector3.up, Vector3.down, out lr);
+            Physics.Raycast(backRight.position + Vector3.up, Vector3.down, out rr);
+            Physics.Raycast(frontLeft.position + Vector3.up, Vector3.down, out lf);
+            Physics.Raycast(frontRight.position + Vector3.up, Vector3.down, out rf);
+            upDir = (Vector3.Cross(rr.point - Vector3.up, lr.point - Vector3.up) +
+                     Vector3.Cross(lr.point - Vector3.up, lf.point - Vector3.up) +
+                     Vector3.Cross(lf.point - Vector3.up, rf.point - Vector3.up) +
+                     Vector3.Cross(rf.point - Vector3.up, rr.point - Vector3.up)
+                    ).normalized;
+            Debug.DrawRay(rr.point, Vector3.up);
+            Debug.DrawRay(lr.point, Vector3.up);
+            Debug.DrawRay(lf.point, Vector3.up);
+            Debug.DrawRay(rf.point, Vector3.up);
+            transform.up = upDir;*/
+           
+
+
+
+
+            // TODO: is it intentional to not use CharacterController or Rigidbody here? are you sure you don't need collision?
+            // TODO: is the road completely flat?
+            //transform.Translate (0, 0, 1 * speed * Time.deltaTime);
+        
+	}
+
+	void FixedUpdate() {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //StartCoroutine(Flip());
+            hopping = false;
+        }
         if (CanGo)//Someone correct me if I am wrong here, but putting this here instead of around translate is optimal I believe. When False, we skip this whole thing, rather than doing a needless part, and a bool check is a bool check - Clair
         {
             this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, 0);
@@ -53,7 +101,8 @@ public class PlayerMovement : MonoBehaviour {
             if (!drifting[0])
             {
                 transform.Rotate(0, x / 2, 0);
-            }else
+            }
+            else
             {
                 if (!drifting[1])
                 {
@@ -113,16 +162,16 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
             else//If no buttons are being hit... - Clair
-            { 
-                if (speed > 0)
-                {
+            {
+                // if (speed > 0)
+                //{
 
-                    speed *= 0.9f; //We slow down 
+                speed *= 0.9f; //We slow down 
 
-                }else if (speed < 0)
-                {
-                    speed += acceleration;
-                }
+                /* }else if (speed < 0)
+                 {
+                     speed += acceleration;
+                 }*/
                 if (speed > maxSpeed)//If boostspeed is 1.5x max speed, boostspeed *.9 is still faster than max speed, meaning it would be optimal to decel after a boost without this check. -Clair
                 {
                     speed = maxSpeed;
@@ -132,42 +181,23 @@ public class PlayerMovement : MonoBehaviour {
 
             //Drifting code below -Clair
 
-            if (z > .05f&&!hopping&&!drifting[0]) {
+            if (z > .05f && !hopping && !drifting[0])
+            {
 
                 rigid.AddForce(new Vector3(0, 3, 0), ForceMode.VelocityChange);
                 hopping = true;
 
-            }else if (z <= .05f)
+            }
+            else if (z <= .05f)
             {
                 drifting[0] = false;
             }
-
-
-            //This should rotate the player based on the normal of the terrain below - Clair
-
-
-
-
-
-
-            // TODO: is it intentional to not use CharacterController or Rigidbody here? are you sure you don't need collision?
-            // TODO: is the road completely flat?
-            //transform.Translate (0, 0, 1 * speed * Time.deltaTime);
             rigid.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
-        }
-	}
 
-	void FixedUpdate() {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //StartCoroutine(Flip());
-            hopping = false;
         }
 
-
-
-	}
-	//Clair's Stuff
+    }
+    //Clair's Stuff
     public void Boost(float multiplier, float duration)
     {
         boostMultiplier = multiplier;//Literally importing values
