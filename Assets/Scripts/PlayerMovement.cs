@@ -2,6 +2,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -15,6 +16,12 @@ public class PlayerMovement : MonoBehaviour {
 	public float speed=0;
 	public float acceleration=.1f;
 	public float maxSpeed=10;
+
+	public Text raceTimer; // On the UI, the character's race time
+	public Text lapCounter; // Lap counter
+
+	public float[] lapTimesMario; // Mario's Lap Times
+	public float[] lapTimesLuigi; // Luigi's Lap Times
 
 	Vector3 inputVector;
 	//Clair's Variables
@@ -30,6 +37,7 @@ public class PlayerMovement : MonoBehaviour {
     float y;//acceleration
     float z;//Triggers
 
+	bool isRaceOver = false;
 
 
     public GameObject PlayerCamera;
@@ -39,10 +47,21 @@ public class PlayerMovement : MonoBehaviour {
 
 		rigid = GetComponent<Rigidbody> ();
 
+		lapTimesMario = new float[3]; // Mario's Lap Times
+		lapTimesLuigi = new float[3]; // Luigi's Lap Times
+
 	}
 
 	// Update is called once per frame
 	void Update () {
+
+		if (!isRaceOver && playerId == 0 && Time.time > 3) {
+			string minutes = Mathf.Floor((Time.time-3) / 60).ToString("00");
+			string seconds =((Time.time -3) % 60).ToString("00");
+
+			raceTimer.text = "Time: " + minutes + ":" + seconds;
+		}
+
         if (CanGo)//Someone correct me if I am wrong here, but putting this here instead of around translate is optimal I believe. When False, we skip this whole thing, rather than doing a needless part, and a bool check is a bool check - Clair
         {
             this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, 0);
@@ -185,8 +204,58 @@ public class PlayerMovement : MonoBehaviour {
 				RaceManagerScript.Singleton.HasStarted[playerId] = true;
 			}else if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == 0)//Or that player's lap counter goes up if they have hit all the previous triggers
 			{
+				int lapCount = RaceManagerScript.Singleton.lapCounts[playerId];
+
+				if (lapCount == 0) {
+					if (playerId == 0 /*Mario*/) {
+						lapTimesMario [0] = Time.time; // Mario's Lap Times
+
+					} else {
+						lapTimesLuigi [0] = Time.time; // Luigi's Lap Times
+					}
+				} else if( lapCount <= 2){
+					if (playerId == 0 /*Mario*/) {
+						lapTimesMario [lapCount] = Time.time - lapTimesMario[lapCount-1]; // Mario's Lap Times
+					} else {
+						lapTimesLuigi [lapCount] = Time.time - lapTimesLuigi[lapCount-1]; // Luigi's Lap Times
+					}
+				}
+
+				if (lapCount == 2 && playerId == 0) {
+					isRaceOver = true; 
+					for (int i = 0; i < lapTimesMario.Length; i++) {
+						string minutes = Mathf.Floor (lapTimesMario [i] / 60).ToString ("00");
+						string seconds = (lapTimesMario [i] % 60).ToString ("00");
+
+						raceTimer.text += "\n" + minutes + ":" + seconds;
+					}
+					string totalMinutes = Mathf.Floor (Time.time / 60).ToString ("00");
+					string totalSeconds = (Time.time % 60).ToString ("00");
+
+					raceTimer.text += "";
+					raceTimer.text += "\nTotal:" + totalMinutes + ":" + totalSeconds;
+				} else if(lapCount == 2 && playerId == 1) {
+					isRaceOver = true; 
+					for (int i = 0; i < lapTimesLuigi.Length; i++) {
+						string minutes = Mathf.Floor (lapTimesLuigi [i] / 60).ToString ("00");
+						string seconds = (lapTimesLuigi [i] % 60).ToString ("00");
+
+						raceTimer.text += "\n" + minutes + ":" + seconds;
+					}
+					string totalMinutes = Mathf.Floor (Time.time / 60).ToString ("00");
+					string totalSeconds = (Time.time % 60).ToString ("00");
+
+					raceTimer.text = "";
+					raceTimer.text += "\nTotal:" + totalMinutes + ":" + totalSeconds;
+				}
+				
 				RaceManagerScript.Singleton.lapCounts[playerId]++;
+				lapCount = Mathf.Clamp (lapCount+2, 0, 3);
+				if (playerId == 0) {
+					lapCounter.text = "Lap: " + lapCount + "/3";
+				}
                 
+
 			}
 		}
 
