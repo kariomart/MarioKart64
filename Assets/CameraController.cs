@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         //Debug.Log("Cameralock = " + cameraLock);
         if (!cameraLock)
         {
@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour {
             transform.position = Vector3.Lerp(transform.position, target.position - target.forward * 3.25f + Vector3.up * 1.5f, lerpSpeed * Time.deltaTime);//This feels about perfect, and because of the lerping the player can get a bit ahead and replicate the camera zoom on stop. I am super proud of this one! -Clair
 
 
-            transform.forward = Vector3.Lerp(transform.forward, new Vector3(target.forward.x, 0, target.forward.z), rotLerpSpeed);//Martin's cool rotational lerp, going to play with it for drifting
+            transform.forward = Vector3.Lerp(transform.forward, new Vector3(target.forward.x, 0, target.forward.z), rotLerpSpeed*Time.deltaTime);//Martin's cool rotational lerp, going to play with it for drifting
         }
 	}
 }
