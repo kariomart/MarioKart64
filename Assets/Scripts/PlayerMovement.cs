@@ -258,6 +258,7 @@ public class PlayerMovement : MonoBehaviour {
         float duration = 1;
         Quaternion StartRotation = transform.rotation;
         float t = 0f;
+        PlayerCamera.GetComponent<CameraController>().cameraLock = true;
         while (t<duration)
         {
             transform.rotation = StartRotation * Quaternion.AngleAxis(t / duration * 720f, Vector3.up);
@@ -267,6 +268,7 @@ public class PlayerMovement : MonoBehaviour {
         transform.rotation = StartRotation;
         //Debug.Log("HitBanana() activated");
         yield return new WaitForSeconds(1);
+        PlayerCamera.GetComponent<CameraController>().cameraLock = false;
         acceleration = 0.1f;
     }
 

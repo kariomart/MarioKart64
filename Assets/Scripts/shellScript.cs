@@ -13,8 +13,14 @@ public class shellScript : MonoBehaviour {
     public float orbitDistance = 3.0f;
     public float orbitDegreesPerSec = 180.0f;
     public Vector3 relativeDistance = Vector3.zero;
-    bool isRed;
+    public bool isRed;
     bool isBlue;
+    public int playerLaunched;
+    int playerToTrack;
+    public GameObject Mario;
+    public GameObject Luigi;
+    public Transform shellTarget;
+    public float redShellSpeed;
     int bounces;
 
 
@@ -29,6 +35,19 @@ public class shellScript : MonoBehaviour {
             relativeDistance = transform.position - rotTarget.position;
         }
         bounces = 0;
+        Mario = GameObject.Find("Mario");
+        Luigi = GameObject.Find("Luigi");
+        if (playerLaunched == 0)
+        {
+            playerToTrack = 1;
+            shellTarget = Luigi.transform;
+        }
+        if (playerLaunched == 1)
+        {
+            playerToTrack = 0;
+            shellTarget = Mario.transform;
+        }
+        Debug.Log("Launched: " + playerLaunched + " Target: " + shellTarget);
     }
 
     void FixedUpdate()
@@ -54,10 +73,18 @@ public class shellScript : MonoBehaviour {
             
         }
 
-        if (isRed)
+        if (isRed && Vector3.Distance(transform.position,shellTarget.position)<30)
         {
             //tracking code goes here
+            transform.position = Vector3.MoveTowards(transform.position,shellTarget.position,redShellSpeed*Time.deltaTime);
+            Debug.Log("tracking");
         }
+        else if (isRed)
+        {
+            shellRB.velocity = transform.forward * 25;
+            Debug.Log("not tracking");
+        }
+        Debug.Log("shell pos: " + transform.position + " target pos " + shellTarget.position);
 
     }
 
@@ -104,7 +131,7 @@ public class shellScript : MonoBehaviour {
                 bounces += 1;
                 //Debug.Log("bounces: " + bounces);
             }
-            else
+            else if (!isRed)
             {
                 Destroy(gameObject);
             }

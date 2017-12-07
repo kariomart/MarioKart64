@@ -2724,6 +2724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Banana: {fileID: 1655457408872732, guid: b40c049f0bc059c4789ecab59fdb42fb, type: 2}
   GreenShell: {fileID: 1216087674491220, guid: 2a4e9401211c7474aaaf161dd1a01344, type: 2}
+  RedShell: {fileID: 1452583018781096, guid: bd8ecb9aa9fdf6a4aa1abe4622434642, type: 2}
   BadCube: {fileID: 0}
   shellSpeed: 15
   hasItem: 0
@@ -2735,6 +2736,7 @@ MonoBehaviour:
   TrioRB: []
   P1ItemText: {fileID: 0}
   P2ItemText: {fileID: 0}
+  canGrabItem: 0
 --- !u!1 &997659817 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100064, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
@@ -3574,6 +3576,10 @@ Prefab:
     - target: {fileID: 100066, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
       propertyPath: m_TagString
       value: ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 400076, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
@@ -5867,10 +5873,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Banana: {fileID: 1655457408872732, guid: b40c049f0bc059c4789ecab59fdb42fb, type: 2}
   GreenShell: {fileID: 1216087674491220, guid: 2a4e9401211c7474aaaf161dd1a01344, type: 2}
+  RedShell: {fileID: 1452583018781096, guid: bd8ecb9aa9fdf6a4aa1abe4622434642, type: 2}
   BadCube: {fileID: 1175392847205182, guid: a8abeeebb7fe81643a79e45c95d7aa9c, type: 2}
   shellSpeed: 25
   hasItem: 0
-  currentItem: 6
+  currentItem: 2
   playerID: 1
   boostValue: 0
   canBoost: 0
@@ -5878,6 +5885,7 @@ MonoBehaviour:
   TrioRB: []
   P1ItemText: {fileID: 0}
   P2ItemText: {fileID: 0}
+  canGrabItem: 0
 --- !u!114 &1829379213
 MonoBehaviour:
   m_ObjectHideFlags: 0

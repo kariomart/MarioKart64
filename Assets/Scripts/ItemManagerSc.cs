@@ -28,7 +28,6 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
     float boxTimer = 0;
     bool startTimer = false;
     public float boxRegen;
-    bool canGrabItem;
     int itemNum;
     int playerID;
     public items assignedItem;
@@ -39,6 +38,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
     public float zRot;
     public GameObject P1ItemText;
     public GameObject P2ItemText;
+    public BoxCollider boxCollider;
 
 
     // Use this for initialization
@@ -47,7 +47,6 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         Instantiate(QMark, gameObject.transform.position, Quaternion.identity, gameObject.transform);//It might be better to have the itembox instantiate this, or have the itembox be the parent and set world rotation as needed -Clair
         P1ItemText = GameObject.Find("P1ItemText");
         P2ItemText = GameObject.Find("P2ItemText");
-        canGrabItem = true;
         xRot = Random.Range(-.4f, .4f);
         if (xRot <= 0)
         {
@@ -58,6 +57,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
             yRot = -1;
         }
         zRot = Random.Range(0.5f, .8f);
+        boxCollider = transform.GetComponent<BoxCollider>();
     }
 	
 	// Update is called once per frame
@@ -76,7 +76,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
             PlayerSc = other.GetComponent<PlayerItemSc>();
             PlayerMovementSc = other.GetComponent<PlayerMovement>();
             playerID = PlayerMovementSc.playerId;
-            if (canGrabItem == true)
+            if (PlayerSc.canGrabItem == true)
             {
                 
                 Destroy(transform.GetChild(0).gameObject);
@@ -89,7 +89,8 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
 
     IEnumerator BoxRegen()
     {
-        canGrabItem = false;
+        PlayerSc.canGrabItem = false;
+        boxCollider.enabled = false;
         startTimer = true;
         itemNum = Random.Range(0, 100);
         Debug.Log(itemNum);
@@ -243,7 +244,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         Instantiate(ItemBox, gameObject.transform.position, Quaternion.identity, gameObject.transform);
         Instantiate(QMark, gameObject.transform.position, Quaternion.identity, gameObject.transform);
         startTimer = false;
+        boxCollider.enabled = true;
         boxTimer = 0;
-        canGrabItem = true;
     }
 }
