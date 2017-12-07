@@ -24,7 +24,6 @@ public class shellScript : MonoBehaviour {
         shellRB.freezeRotation = true;
         isLaunched = true;
         finishedLaunch = false;
-        rotTarget = transform.parent;
         if (rotTarget != null)
         {
             relativeDistance = transform.position - rotTarget.position;
@@ -81,7 +80,7 @@ public class shellScript : MonoBehaviour {
         }
         else if (collision.gameObject.tag == "Player")
         {
-            if (finishedLaunch == false)
+            if (finishedLaunch == false && collision.transform != transform)
             {
                 Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
             }
@@ -118,6 +117,7 @@ public class shellScript : MonoBehaviour {
     {
         if (rotTarget != null)
         {
+            Debug.Log("Rotating!");
             transform.position = rotTarget.position + relativeDistance;
             transform.RotateAround(rotTarget.position, Vector3.up, orbitDegreesPerSec * Time.deltaTime);
             // Reset relative position after rotate

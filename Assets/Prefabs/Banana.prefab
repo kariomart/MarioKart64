@@ -20,8 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4442406013284284}
   - component: {fileID: 33713000328964380}
-  - component: {fileID: 136077624769177462}
   - component: {fileID: 23152203492693872}
+  - component: {fileID: 95894196114641490}
+  - component: {fileID: 136524938439255286}
   m_Layer: 0
   m_Name: Banana
   m_TagString: BananaTag
@@ -35,9 +36,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1655457408872732}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.26276, y: 1.0288227, z: -56.008617}
-  m_LocalScale: {x: 0.30737063, y: 0.30737063, z: 0.30737063}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 96.124, y: 1.192, z: -33.108}
+  m_LocalScale: {x: 0.015632452, y: 0.031817522, z: 0.017661221}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -55,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: add1e27f09f2bcb44a2217370a2e6034, type: 2}
+  - {fileID: 2100000, guid: 5ed62a9530c0d43418f9a69cd9a01f83, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -63,7 +64,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_SelectedEditorRenderState: 3
@@ -80,17 +81,34 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1655457408872732}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!136 &136077624769177462
+  m_Mesh: {fileID: 4300000, guid: 061be0046be904655afd486417b299c6, type: 3}
+--- !u!95 &95894196114641490
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1655457408872732}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 061be0046be904655afd486417b299c6, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!136 &136524938439255286
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1655457408872732}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 18.964384
+  m_Height: 27.835396
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.19586372, z: 0.0010814667}
