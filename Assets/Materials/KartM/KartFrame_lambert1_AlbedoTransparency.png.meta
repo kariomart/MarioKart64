@@ -1,16 +1,6 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-<<<<<<< HEAD
 guid: 5fbb1bcede053af4fb2e30c95b208b0e
 timeCreated: 1512077051
-=======
-guid: d3c510a274d1d794fbb888735d8fd088
-timeCreated: 1512501641
->>>>>>> master
-=======
-guid: 5fbb1bcede053af4fb2e30c95b208b0e
-timeCreated: 1512077051
->>>>>>> Sam
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
