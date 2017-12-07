@@ -220,6 +220,8 @@ RectTransform:
   - {fileID: 36710315}
   - {fileID: 1343330687}
   - {fileID: 260089274}
+  - {fileID: 1855137132}
+  - {fileID: 107594668}
   - {fileID: 520285736}
   - {fileID: 1886088912}
   m_Father: {fileID: 0}
@@ -519,7 +521,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 42143651}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1559,7 +1561,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 42143651}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3583,8 +3585,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInvincible: 0
   speed: 0
-  acceleration: 2
-  maxSpeed: 20
+  acceleration: 0.075
+  maxSpeed: 1
   raceTimer: {fileID: 260089275}
   lapCounter: {fileID: 1886088913}
   lapTimesMario: []
@@ -7717,8 +7719,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInvincible: 0
   speed: 0
-  acceleration: 2
-  maxSpeed: 20
+  acceleration: 0.075
+  maxSpeed: 1
   raceTimer: {fileID: 520285737}
   lapCounter: {fileID: 0}
   lapTimesMario: []
@@ -7761,7 +7763,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 42143651}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8104,7 +8106,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 42143651}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
