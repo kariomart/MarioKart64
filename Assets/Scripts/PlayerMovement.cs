@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-//HEY! HEY LISTEN! We need to multiply things by delta time guys, or there could be unintended behavior on low powered machines. - Clair  
 
   //items stuff
   public bool isInvincible;
@@ -23,8 +22,20 @@ public class PlayerMovement : MonoBehaviour {
     float boostDuration;
     float boostMultiplier;
     public bool[] drifting = { false, false };//If Drifting, False = left True = Right
-    bool hopping = false;
+    public bool hopping = false;
     float maxReverse = -3f;
+
+    public Vector3 upDir;//For the normal based rotation - Clair
+    public Transform backLeft;
+    public Transform backRight;
+    public Transform frontLeft;//-0.65, - , .452
+    public Transform frontRight;
+    public RaycastHit lr;
+    public RaycastHit rr;
+    public RaycastHit lf;
+    public RaycastHit rf;
+
+
     //Borrowing this name convention from the original implementation, we really should fix this -Clair
     float x;//Turning, between -1 and 1
     float y;//acceleration
