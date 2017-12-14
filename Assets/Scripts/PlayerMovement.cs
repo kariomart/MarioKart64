@@ -24,16 +24,17 @@ public class PlayerMovement : MonoBehaviour {
     public bool[] drifting = { false, false };//If Drifting, False = left True = Right
     public bool hopping = false;
     float maxReverse = -3f;
+   // public Transform kartModel;
 
     public Vector3 upDir;//For the normal based rotation - Clair
     public Transform backLeft;
     public Transform backRight;
     public Transform frontLeft;//-0.65, - , .452
     public Transform frontRight;
-    public RaycastHit lr;
-    public RaycastHit rr;
-    public RaycastHit lf;
-    public RaycastHit rf;
+    public RaycastHit fl;
+    public RaycastHit fr;
+    public RaycastHit bl;
+    public RaycastHit br;
 
 
     //Borrowing this name convention from the original implementation, we really should fix this -Clair
@@ -49,123 +50,12 @@ public class PlayerMovement : MonoBehaviour {
 	void Start () {
 
 		rigid = GetComponent<Rigidbody> ();
-
+        //kartModel = transform.Find("KartFrame");
 	}
 
 	// Update is called once per frame
 	void Update () {
-//        if (CanGo)//Someone correct me if I am wrong here, but putting this here instead of around translate is optimal I believe. When False, we skip this whole thing, rather than doing a needless part, and a bool check is a bool check - Clair
-//        {
-//            this.transform.rotation = Quaternion.Euler(0, this.transform.rotation.eulerAngles.y, 0);
-//
-//            //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
-//
-//            x = Input.GetAxis("HorizontalP" + (playerId + 1)) * Time.deltaTime * 150.0f;
-//            if (!drifting[0])
-//            {
-//                transform.Rotate(0, x / 2, 0);
-//            }else
-//            {
-//                if (!drifting[1])
-//                {
-//                    transform.Rotate(0, (x - .55f) / 2, 0);
-//                }
-//                else
-//                {
-//                    transform.Rotate(0, (x + .55f) / 2, 0);
-//                }
-//            }
-//
-//            //This one too - Clair
-//            y = Input.GetAxis("AccelP" + (playerId + 1));
-//
-//            z = Input.GetAxis("TriggersP" + (playerId + 1));
-//
-//            if (boostDuration > 0)//Boosting is > everything - Clair
-//            {
-//                speed = maxSpeed * boostMultiplier;//When boosting the speed is static, regardless of terrain slow down or player input. Using a multiplier allows us to give mini boosts, which is important for drifting and might be for the start sequence
-//                boostDuration -= Time.deltaTime;//Boosts last a certain amount of time...
-//                if (boostDuration <= 0)//And when they run out, we return to the normal max speed
-//                {
-//                    speed = maxSpeed;
-//                }
-//            }
-//            else if (y > .05f)
-//            {
-//
-//                if (speed < maxSpeed)
-//                {
-//                    speed += (acceleration * y);
-//                    //Debug.Log (speed);
-//                }
-//                if (speed > maxSpeed)//Double purpose here- It would be easy to have speed go over the max with our accel (if you are at .99, max speed is 1, you could end up with a scenario where acceleration *y puts you over the max), and to prevent boost speed from continuing after the boost is over. - Clair
-//                {
-//                    speed = maxSpeed;
-//                }
-//
-//            }
-//            else if (y < -.05)
-//            {//To distinguish between player slow down and no input - Clair
-//
-//                if (speed > .01f)
-//                {//If we are holding back but moving forward.... -Clair
-//
-//                    speed *= 0.8f; // TODO: if this is a tuning value, I'd expose it as a specific var?
-//
-//                }
-//                else if (speed <= .01f && speed >= maxReverse)
-//                {
-//                    speed += acceleration * y;//Acceleration is positive, y is negative
-//                    //speed = maxReverse;
-//                }
-//                if (speed > maxSpeed)//If boostspeed is 1.5x max speed, boostspeed *.8 is still faster than max speed, meaning it would be optimal to decel after a boost without this check. -Clair
-//                {
-//                    speed = maxSpeed;
-//                }
-//            }
-//            else//If no buttons are being hit... - Clair
-//            { 
-//                if (speed > 0)
-//                {
-//
-//                    speed *= 0.9f; //We slow down 
-//
-//                }else if (speed < 0)
-//                {
-//                    speed += acceleration;
-//                }
-//                if (speed > maxSpeed)//If boostspeed is 1.5x max speed, boostspeed *.9 is still faster than max speed, meaning it would be optimal to decel after a boost without this check. -Clair
-//                {
-//                    speed = maxSpeed;
-//                }
-//            }
-//
-//
-//            //Drifting code below -Clair
-//
-//            if (z > .05f&&!hopping&&!drifting[0]) {
-//
-//                rigid.AddForce(new Vector3(0, 3, 0), ForceMode.VelocityChange);
-//                hopping = true;
-//
-//            }else if (z <= .05f)
-//            {
-//                drifting[0] = false;
-//            }
-//
 
-            //This should rotate the player based on the normal of the terrain below - Clair
-
-
-
-
-
-
-            // TODO: is it intentional to not use CharacterController or Rigidbody here? are you sure you don't need collision?
-            // TODO: is the road completely flat?
-            //transform.Translate (0, 0, 1 * speed * Time.deltaTime);
-         //   rigid.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
-        
 	}
 
 	void FixedUpdate() {
@@ -175,27 +65,54 @@ public class PlayerMovement : MonoBehaviour {
             hopping = false;
         }
 		if (CanGo) {//Someone correct me if I am wrong here, but putting this here instead of around translate is optimal I believe. When False, we skip this whole thing, rather than doing a needless part, and a bool check is a bool check - Clair
-			this.transform.rotation = Quaternion.Euler (0, this.transform.rotation.eulerAngles.y, 0);
+                    //this.transform.rotation = Quaternion.Euler (0, this.transform.rotation.eulerAngles.y, 0);
+            Vector3 temp;
+            if(Physics.Raycast(frontLeft.position, -1*this.transform.up, out fl))
+            {   
+            }
 
-			//We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
+            if (Physics.Raycast(frontRight.position, -1 * this.transform.up, out fr))
+            {
+            }
+            if (Physics.Raycast(backRight.position, -1 * this.transform.up, out br))
+            {
+            }
+            if (Physics.Raycast(backRight.position, -1 * this.transform.up, out bl))
+            {
+            }
+            temp = (fl.normal + fr.normal + bl.normal + br.normal)/4;
+            //this.transform.up = new Vector3(temp.x, temp.y, temp.z);
+            Quaternion.FromToRotation(Vector3.right, temp);
 
-			x = Input.GetAxis ("HorizontalP" + (playerId + 1)) * Time.deltaTime * 150.0f;
-			if (!drifting [0]) {
-				transform.Rotate (0, x / 2, 0);
-			} else {
-				if (!drifting [1]) {
-					transform.Rotate (0, (x - .55f) / 2, 0);
-				} else {
-					transform.Rotate (0, (x + .55f) / 2, 0);
-				}
-			}
+
+            //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
+
+            x = Input.GetAxis ("HorizontalP" + (playerId + 1)) * Time.deltaTime * 150.0f;
 
 			//This one too - Clair
 			y = Input.GetAxis ("AccelP" + (playerId + 1));
 
 			z = Input.GetAxis ("TriggersP" + (playerId + 1));
 
-			if (boostDuration > 0) {//Boosting is > everything - Clair
+            if (!drifting[0])
+            {
+                transform.Rotate(0, x / 2, 0);
+            }
+            else
+            {
+                //kartModel.rotation = Quaternion.Slerp(kartModel.rotation, Quaternion.Euler(new Vector3(0, x * 30, 0)),1*Time.deltaTime);
+               // kartModel.forward = Vector3.Lerp(transform.forward, new Vector3((x*30)+this.transform.rotation.x, 0,0 ), 4f);
+                if (!drifting[1])
+                {
+                    transform.Rotate(0, (x - .55f) / 2, 0);
+                }
+                else
+                {
+                    transform.Rotate(0, (x + .55f) / 2, 0);
+                }
+            }
+
+            if (boostDuration > 0) {//Boosting is > everything - Clair
 				speed = maxSpeed * boostMultiplier;//When boosting the speed is static, regardless of terrain slow down or player input. Using a multiplier allows us to give mini boosts, which is important for drifting and might be for the start sequence
 				boostDuration -= Time.deltaTime;//Boosts last a certain amount of time...
 				if (boostDuration <= 0) {//And when they run out, we return to the normal max speed

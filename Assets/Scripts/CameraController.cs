@@ -9,9 +9,11 @@ public class CameraController : MonoBehaviour {
 	Vector3 pos;
 	public GameObject player;
     public bool cameraLock;
+    PlayerMovement playerScript;
 	// Use this for initialization
 	void Start () {
         cameraLock = false;
+        playerScript = player.GetComponent<PlayerMovement>();
 	}
 	
 	// Update is called once per frame
@@ -21,10 +23,18 @@ public class CameraController : MonoBehaviour {
         {
             Transform target = player.transform;
 
+            //transform.position = Vector3.Lerp(transform.position, target.position - target.forward * 6.75f + Vector3.up * 1.5f, lerpSpeed * Time.deltaTime);//This feels about perfect, and because of the lerping the player can get a bit ahead and replicate the camera zoom on stop. I am super proud of this one! -Clair
+            //transform.position = Vector3.Lerp(transform.position, target.position - target.forward * 6.75f + Vector3.up * 1.5f, lerpSpeed * Time.deltaTime);//This feels about perfect, and because of the lerping the player can get a bit ahead and replicate the camera zoom on stop. I am super proud of this one! -Clair
             transform.position = Vector3.Lerp(transform.position, target.position - target.forward * 3.25f + Vector3.up * 1.5f, lerpSpeed * Time.deltaTime);//This feels about perfect, and because of the lerping the player can get a bit ahead and replicate the camera zoom on stop. I am super proud of this one! -Clair
 
+            if (playerScript.drifting[0])
+            {
+                transform.forward = Vector3.Lerp(transform.forward, new Vector3(target.forward.x, 0, target.forward.z), rotLerpSpeed*.5f);//Martin's cool rotational lerp, going to play with it for drifting
+            }else
+            {
+                transform.forward = Vector3.Lerp(transform.forward, new Vector3(target.forward.x, 0, target.forward.z), rotLerpSpeed);//Martin's cool rotational lerp, going to play with it for drifting
 
-            transform.forward = Vector3.Lerp(transform.forward, new Vector3(target.forward.x, 0, target.forward.z), rotLerpSpeed);//Martin's cool rotational lerp, going to play with it for drifting
+            }
         }
 	}
 }
