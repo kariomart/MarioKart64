@@ -1021,27 +1021,27 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.02390756
+      value: 0.023910522
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.089
+      value: 0.049999952
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.11220605
+      value: -0.11220598
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1053,7 +1053,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.10372913
+      value: 0.17581171
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalScale.y
@@ -1061,7 +1061,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.08531245
+      value: 0.17062488
       objectReference: {fileID: 0}
     - target: {fileID: 2300078, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4194,7 +4194,7 @@ Transform:
   m_GameObject: {fileID: 986861897}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 90.82, y: 1.19, z: -20.45}
-  m_LocalScale: {x: 1.6731492, y: 0.8748584, z: 2.214683}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 149083498}
   - {fileID: 928121079}
@@ -4220,6 +4220,7 @@ MonoBehaviour:
   CanGo: 0
   drifting: 0000
   hopping: 0
+  kartModel: {fileID: 0}
   upDir: {x: 0, y: 0, z: 0}
   backLeft: {fileID: 0}
   backRight: {fileID: 0}
@@ -4393,27 +4394,27 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.02390756
+      value: 0.023910522
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: 0.049999952
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.11220605
+      value: -0.11220598
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4421,7 +4422,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalScale.x
@@ -4433,12 +4434,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.08531245
+      value: 0.17062488
       objectReference: {fileID: 0}
     - target: {fileID: 2300078, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0cf88ae2b26cb4e7f8b53d81df148adc, type: 2}
+    - target: {fileID: 400010, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5caa091c2024738419a322f4d33f1957, type: 3}
   m_IsPrefabParent: 0
@@ -6380,7 +6385,7 @@ GameObject:
   - component: {fileID: 1469057396}
   - component: {fileID: 1469057395}
   - component: {fileID: 1469057394}
-  - component: {fileID: 1469057393}
+  - component: {fileID: 1469057397}
   m_Layer: 0
   m_Name: LuigiCamera
   m_TagString: MainCamera
@@ -6401,21 +6406,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1469057393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1469057391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef61ad1c666384dc095f582b6093dd13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lerpSpeed: 4
-  rotLerpSpeed: 3
-  player: {fileID: 1829379206}
-  cameraLock: 0
 --- !u!124 &1469057394
 Behaviour:
   m_ObjectHideFlags: 0
@@ -6448,7 +6438,7 @@ Camera:
     height: 0.5
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 39
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -6466,6 +6456,21 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!114 &1469057397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1469057391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4ce6885f5830844b699cbdfb2c0051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpSpeed: 6
+  rotLerpSpeed: 3
+  player: {fileID: 1829379206}
+  cameraLock: 0
 --- !u!1 &1472077603
 GameObject:
   m_ObjectHideFlags: 0
@@ -7260,7 +7265,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: 8f56314309c618244afaeb131464e81b, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100014, guid: 8f56314309c618244afaeb131464e81b, type: 3}
       propertyPath: m_Name
@@ -7280,7 +7285,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: 8f56314309c618244afaeb131464e81b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.20016761
+      value: 0.4003352
       objectReference: {fileID: 0}
     - target: {fileID: 2300010, guid: 8f56314309c618244afaeb131464e81b, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -8351,10 +8356,10 @@ Transform:
   m_GameObject: {fileID: 1829379206}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 94.08, y: 1.15, z: -20.49}
-  m_LocalScale: {x: 1, y: 1, z: 2.116262}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1664985575}
   - {fileID: 1368559390}
+  - {fileID: 1664985575}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
@@ -8416,6 +8421,7 @@ MonoBehaviour:
   CanGo: 0
   drifting: 0000
   hopping: 0
+  kartModel: {fileID: 0}
   upDir: {x: 0, y: 0, z: 0}
   backLeft: {fileID: 0}
   backRight: {fileID: 0}
@@ -8599,6 +8605,7 @@ GameObject:
   - component: {fileID: 1879453586}
   - component: {fileID: 1879453585}
   - component: {fileID: 1879453590}
+  - component: {fileID: 1879453591}
   m_Layer: 0
   m_Name: Mario Camera
   m_TagString: MainCamera
@@ -8645,7 +8652,7 @@ Camera:
     height: 0.5
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 39
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -8688,6 +8695,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 4
+  rotLerpSpeed: 3
+  pos: {x: 0, y: 0, z: 0}
+  player: {fileID: 986861897}
+  cameraLock: 0
+--- !u!114 &1879453591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1879453584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4ce6885f5830844b699cbdfb2c0051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpSpeed: 6
   rotLerpSpeed: 3
   player: {fileID: 986861897}
   cameraLock: 0
