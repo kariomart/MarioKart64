@@ -163,8 +163,8 @@ public class PlayerItemSc : MonoBehaviour {
             {
                 singleBanana.transform.parent = null;
                 canGrabItem = true;
-                hasItem = false;
                 resetItemText();
+                hasItem = false;
             }
             else if (currentItem == items.bananaBunch)
             {
@@ -258,8 +258,8 @@ public class PlayerItemSc : MonoBehaviour {
             else if (currentItem == items.badCube)
             {
                 SingleBadCube.transform.parent = null;
-                resetItemText();
                 StartCoroutine(BadCubeCollideTrue());
+                resetItemText();
                 canGrabItem = true;
                 hasItem = false;
             }

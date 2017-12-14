@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114094892937149060}
   m_Layer: 0
   m_Name: RedShell
-  m_TagString: Untagged
+  m_TagString: Shell
   m_Icon: {fileID: -1577725955494882426, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -379,7 +379,7 @@ MonoBehaviour:
   Mario: {fileID: 0}
   Luigi: {fileID: 0}
   shellTarget: {fileID: 0}
-  redShellSpeed: 4.94
+  redShellSpeed: 17.31
 --- !u!135 &135684078257733244
 SphereCollider:
   m_ObjectHideFlags: 1

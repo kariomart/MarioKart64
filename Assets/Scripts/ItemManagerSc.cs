@@ -38,6 +38,9 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
     public float zRot;
     public GameObject P1ItemText;
     public GameObject P2ItemText;
+    public Image P1ItemImage;
+    public Image P2ItemImage;
+    public Sprite[] ItemImages;
     public BoxCollider boxCollider;
 
 
@@ -47,6 +50,10 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         Instantiate(QMark, gameObject.transform.position, Quaternion.identity, gameObject.transform);//It might be better to have the itembox instantiate this, or have the itembox be the parent and set world rotation as needed -Clair
         P1ItemText = GameObject.Find("P1ItemText");
         P2ItemText = GameObject.Find("P2ItemText");
+        P1ItemImage = GameObject.Find("P1ItemImage").GetComponent<Image>();
+        P2ItemImage = GameObject.Find("P2ItemImage").GetComponent<Image>();
+        ItemImages = new Sprite[13];
+
         xRot = Random.Range(-.4f, .4f);
         if (xRot <= 0)
         {
@@ -229,13 +236,16 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         Debug.Log("Roll: " + itemNum);
         Debug.Log("Assigned item: " + assignedItem);
         PlayerSc.equipItem(assignedItem);
+        
         if (playerID == 0)
         {
             P1ItemText.GetComponent<Text>().text = "" + assignedItem;
+            P1ItemImage.sprite = ItemImages[(int)assignedItem];
         }
         else if (playerID == 1)
         {
             P2ItemText.GetComponent<Text>().text = "" + assignedItem;
+            P1ItemImage.sprite = ItemImages[(int)assignedItem];
         }
         xRot = Random.Range(0.1f, .4f);
         yRot = -yRot;
