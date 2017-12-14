@@ -28,7 +28,10 @@ public class PlayerItemSc : MonoBehaviour {
     public Rigidbody[] TrioRB;
     public GameObject P1ItemText;
     public GameObject P2ItemText;
+    public Image P1ItemImage;
+    public Image P2ItemImage;
     public bool canGrabItem;
+    public Sprite noItemSprite;
 
     // Use this for initialization
     void Start () {
@@ -39,7 +42,11 @@ public class PlayerItemSc : MonoBehaviour {
         TrioRB = new Rigidbody[4];
         P1ItemText = GameObject.Find("P1ItemText");
         P2ItemText = GameObject.Find("P2ItemText");
+        P1ItemImage = GameObject.Find("P1ItemImage").GetComponent<Image>();
+        P2ItemImage = GameObject.Find("P2ItemImage").GetComponent<Image>();
         canGrabItem = true;
+        P1ItemImage.sprite = noItemSprite;
+        P2ItemImage.sprite = noItemSprite;
     }
 	
 	// Update is called once per frame
@@ -48,7 +55,7 @@ public class PlayerItemSc : MonoBehaviour {
         {
             if (currentItem == items.banana)
             {
-                singleBanana = Instantiate(Banana, transform.position - (transform.forward * 1.7f) + transform.up * .2f, Quaternion.identity, gameObject.transform);
+                singleBanana = Instantiate(Banana, transform.position - (transform.forward * 1.9f) + transform.up * .2f, Quaternion.identity, gameObject.transform);
             }
             else if (currentItem == items.bananaBunch && TrioCount == 0)
             {
@@ -59,9 +66,9 @@ public class PlayerItemSc : MonoBehaviour {
                     Trio3 = null;
                 }
 
-                Trio1 = Instantiate(Banana, transform.position - (transform.forward * 1.7f) - transform.up*.1f, Quaternion.identity);
-                Trio2 = Instantiate(Banana, transform.position - (transform.forward * 2.4f) - transform.up * .1f, Quaternion.identity);
-                Trio3 = Instantiate(Banana, transform.position - (transform.forward * 3.1f) - transform.up * .1f, Quaternion.identity);
+                Trio1 = Instantiate(Banana, transform.position - (transform.forward * 1.9f) - transform.up*.01f, Quaternion.identity);
+                Trio2 = Instantiate(Banana, transform.position - (transform.forward * 2.6f) - transform.up * .01f, Quaternion.identity);
+                Trio3 = Instantiate(Banana, transform.position - (transform.forward * 3.3f) - transform.up * .01f, Quaternion.identity);
 
                 Trio1.transform.parent = transform;
                 Trio2.transform.parent = transform;
@@ -270,10 +277,12 @@ public class PlayerItemSc : MonoBehaviour {
         if (playerID == 0)
         {
             P1ItemText.GetComponent<Text>().text = "No Item";
+            P1ItemImage.sprite = noItemSprite;
         }
         else if (playerID == 1)
         {
             P2ItemText.GetComponent<Text>().text = "No Item";
+            P2ItemImage.sprite = noItemSprite;
         }
     }
 
@@ -297,13 +306,31 @@ public class PlayerItemSc : MonoBehaviour {
     }
     public IEnumerator BananaCollideTrue()
     {
-        Physics.IgnoreCollision(Trio3.GetComponent<Collider>(), GetComponent<Collider>(), true);
-        Physics.IgnoreCollision(Trio2.GetComponent<Collider>(), GetComponent<Collider>(), true);
-        Physics.IgnoreCollision(Trio1.GetComponent<Collider>(), GetComponent<Collider>(), true);
+        if (TrioRB[3] != null)
+        {
+            Physics.IgnoreCollision(Trio3.GetComponent<Collider>(), GetComponent<Collider>(), true);
+        }
+        if (TrioRB[2] != null)
+        {
+            Physics.IgnoreCollision(Trio2.GetComponent<Collider>(), GetComponent<Collider>(), true);
+        }
+        if (TrioRB[1] != null)
+        {
+            Physics.IgnoreCollision(Trio1.GetComponent<Collider>(), GetComponent<Collider>(), true);
+        }
         yield return new WaitForSeconds(1);
-        Physics.IgnoreCollision(Trio3.GetComponent<Collider>(), GetComponent<Collider>(), false);
-        Physics.IgnoreCollision(Trio2.GetComponent<Collider>(), GetComponent<Collider>(), false);
-        Physics.IgnoreCollision(Trio1.GetComponent<Collider>(), GetComponent<Collider>(), false);
+        if (TrioRB[3] != null)
+        {
+            Physics.IgnoreCollision(Trio3.GetComponent<Collider>(), GetComponent<Collider>(), false);
+        }
+        if (TrioRB[2] != null)
+        {
+            Physics.IgnoreCollision(Trio2.GetComponent<Collider>(), GetComponent<Collider>(), false);
+        }
+        if (TrioRB[1] != null)
+        {
+            Physics.IgnoreCollision(Trio1.GetComponent<Collider>(), GetComponent<Collider>(), false);
+        }
     }
 
 }
