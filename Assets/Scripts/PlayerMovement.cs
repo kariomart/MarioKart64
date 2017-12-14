@@ -2,10 +2,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
-//HEY! HEY LISTEN! We need to multiply things by delta time guys, or there could be unintended behavior on low powered machines. - Clair  
 
   //items stuff
   public bool isInvincible;
@@ -16,6 +16,12 @@ public class PlayerMovement : MonoBehaviour {
 	public float acceleration=.1f;
 	public float maxSpeed=10;
 
+	public Text raceTimer; // On the UI, the character's race time
+	public Text lapCounter; // Lap counter
+
+	public float[] lapTimesMario; // Mario's Lap Times
+	public float[] lapTimesLuigi; // Luigi's Lap Times
+
 	Vector3 inputVector;
 	//Clair's Variables
 	public int playerId = 0;//PlayerID is Currently assigned in the inspector. We could also easily have it be assigned by RaceManager
@@ -23,13 +29,26 @@ public class PlayerMovement : MonoBehaviour {
     float boostDuration;
     float boostMultiplier;
     public bool[] drifting = { false, false };//If Drifting, False = left True = Right
-    bool hopping = false;
+    public bool hopping = false;
     float maxReverse = -3f;
+
+    public Vector3 upDir;//For the normal based rotation - Clair
+    public Transform backLeft;
+    public Transform backRight;
+    public Transform frontLeft;//-0.65, - , .452
+    public Transform frontRight;
+    public RaycastHit lr;
+    public RaycastHit rr;
+    public RaycastHit lf;
+    public RaycastHit rf;
+
+
     //Borrowing this name convention from the original implementation, we really should fix this -Clair
     float x;//Turning, between -1 and 1
     float y;//acceleration
     float z;//Triggers
 
+	bool isRaceOver = false;
 
 
     public GameObject PlayerCamera;
@@ -38,6 +57,9 @@ public class PlayerMovement : MonoBehaviour {
 	void Start () {
 
 		rigid = GetComponent<Rigidbody> ();
+
+		lapTimesMario = new float[3]; // Mario's Lap Times
+		lapTimesLuigi = new float[3]; // Luigi's Lap Times
 
 	}
 
@@ -265,8 +287,58 @@ public class PlayerMovement : MonoBehaviour {
 				RaceManagerScript.Singleton.HasStarted[playerId] = true;
 			}else if (RaceManagerScript.Singleton.LastCheckpoints[playerId] == 0)//Or that player's lap counter goes up if they have hit all the previous triggers
 			{
+				int lapCount = RaceManagerScript.Singleton.lapCounts[playerId];
+
+				if (lapCount == 0) {
+					if (playerId == 0 /*Mario*/) {
+						lapTimesMario [0] = Time.time; // Mario's Lap Times
+
+					} else {
+						lapTimesLuigi [0] = Time.time; // Luigi's Lap Times
+					}
+				} else if( lapCount <= 2){
+					if (playerId == 0 /*Mario*/) {
+						lapTimesMario [lapCount] = Time.time - lapTimesMario[lapCount-1]; // Mario's Lap Times
+					} else {
+						lapTimesLuigi [lapCount] = Time.time - lapTimesLuigi[lapCount-1]; // Luigi's Lap Times
+					}
+				}
+
+				if (lapCount == 2 && playerId == 0) {
+					isRaceOver = true; 
+					for (int i = 0; i < lapTimesMario.Length; i++) {
+						string minutes = Mathf.Floor (lapTimesMario [i] / 60).ToString ("00");
+						string seconds = (lapTimesMario [i] % 60).ToString ("00");
+
+						raceTimer.text += "\n" + minutes + ":" + seconds;
+					}
+					string totalMinutes = Mathf.Floor (Time.time / 60).ToString ("00");
+					string totalSeconds = (Time.time % 60).ToString ("00");
+
+					raceTimer.text += "";
+					raceTimer.text += "\nTotal:" + totalMinutes + ":" + totalSeconds;
+				} else if(lapCount == 2 && playerId == 1) {
+					isRaceOver = true; 
+					for (int i = 0; i < lapTimesLuigi.Length; i++) {
+						string minutes = Mathf.Floor (lapTimesLuigi [i] / 60).ToString ("00");
+						string seconds = (lapTimesLuigi [i] % 60).ToString ("00");
+
+						raceTimer.text += "\n" + minutes + ":" + seconds;
+					}
+					string totalMinutes = Mathf.Floor (Time.time / 60).ToString ("00");
+					string totalSeconds = (Time.time % 60).ToString ("00");
+
+					raceTimer.text = "";
+					raceTimer.text += "\nTotal:" + totalMinutes + ":" + totalSeconds;
+				}
+				
 				RaceManagerScript.Singleton.lapCounts[playerId]++;
+				lapCount = Mathf.Clamp (lapCount+2, 0, 3);
+				if (playerId == 0) {
+					lapCounter.text = "Lap: " + lapCount + "/3";
+				}
                 
+
 			}
 		}
 
