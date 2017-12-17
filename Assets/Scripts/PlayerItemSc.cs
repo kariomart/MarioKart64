@@ -45,8 +45,8 @@ public class PlayerItemSc : MonoBehaviour {
         P1ItemImage = GameObject.Find("P1ItemImage").GetComponent<Image>();
         P2ItemImage = GameObject.Find("P2ItemImage").GetComponent<Image>();
         canGrabItem = true;
-        P1ItemImage.sprite = noItemSprite;
-        P2ItemImage.sprite = noItemSprite;
+        //P1ItemImage.sprite = noItemSprite;
+        //P2ItemImage.sprite = noItemSprite;
     }
 	
 	// Update is called once per frame
@@ -96,9 +96,9 @@ public class PlayerItemSc : MonoBehaviour {
                     Trio3 = null;
                 }
                 
-                Trio1 = Instantiate(GreenShell, transform.position + (transform.forward * 2.1f), gameObject.transform.rotation);
-                Trio2 = Instantiate(GreenShell, transform.position + Vector3.Normalize(transform.right *2.1f + transform.forward) * -2.1f, gameObject.transform.rotation);
-                Trio3 = Instantiate(GreenShell, transform.position + Vector3.Normalize(-transform.right*2.1f + transform.forward) * -2.1f, gameObject.transform.rotation);
+                Trio1 = Instantiate(GreenShell, transform.position + (transform.forward * 2.1f) + transform.up*0.01f, gameObject.transform.rotation);
+                Trio2 = Instantiate(GreenShell, transform.position + (Vector3.Normalize(transform.right *2.1f + transform.forward) * -2.1f) + transform.up * 0.01f, gameObject.transform.rotation);
+                Trio3 = Instantiate(GreenShell, transform.position + (Vector3.Normalize(-transform.right*2.1f + transform.forward) * -2.1f) + transform.up * 0.01f, gameObject.transform.rotation);
 
                 //(Quaternion.Euler(0,135,0)*Vector3.forward)
                 /*Trio1.transform.parent = transform;
@@ -134,8 +134,46 @@ public class PlayerItemSc : MonoBehaviour {
                 SingleShell.GetComponent<Rigidbody>().isKinematic = true;
                 SingleShell.GetComponent<shellScript>().playerLaunched = playerID;
             }
-            else if (currentItem == items.redShellTrio)
+            else if (currentItem == items.redShellTrio && TrioCount == 0)
             {
+                if (Trio1 != null)
+                {
+                    Trio1 = null;
+                    Trio2 = null;
+                    Trio3 = null;
+                }
+
+                Trio1 = Instantiate(RedShell, transform.position + (transform.forward * 2.1f) + transform.up * 0.01f, gameObject.transform.rotation);
+                Trio2 = Instantiate(RedShell, transform.position + (Vector3.Normalize(transform.right * 2.1f + transform.forward) * -2.1f) + transform.up * 0.01f, gameObject.transform.rotation);
+                Trio3 = Instantiate(RedShell, transform.position + (Vector3.Normalize(-transform.right * 2.1f + transform.forward) * -2.1f) + transform.up * 0.01f, gameObject.transform.rotation);
+
+                //(Quaternion.Euler(0,135,0)*Vector3.forward)
+                /*Trio1.transform.parent = transform;
+                Trio2.transform.parent = transform;
+                Trio3.transform.parent = transform;*/
+                TrioSc[1] = Trio1.GetComponent<shellScript>();
+                TrioSc[2] = Trio2.GetComponent<shellScript>();
+                TrioSc[3] = Trio3.GetComponent<shellScript>();
+
+                TrioRB[1] = Trio1.GetComponent<Rigidbody>();
+                TrioRB[2] = Trio2.GetComponent<Rigidbody>();
+                TrioRB[3] = Trio3.GetComponent<Rigidbody>();
+
+                TrioSc[1].rotTarget = transform;
+                TrioSc[2].rotTarget = transform;
+                TrioSc[3].rotTarget = transform;
+
+                TrioRB[1].isKinematic = true;
+                TrioRB[2].isKinematic = true;
+                TrioRB[3].isKinematic = true;
+
+                TrioSc[1].isTrio = true;
+                TrioSc[2].isTrio = true;
+                TrioSc[3].isTrio = true;
+
+                TrioSc[1].playerLaunched = playerID;
+                TrioSc[2].playerLaunched = playerID;
+                TrioSc[3].playerLaunched = playerID;
 
             }
             else if (currentItem == items.badCube)
@@ -150,6 +188,7 @@ public class PlayerItemSc : MonoBehaviour {
             {
                 MovementSc.Boost(1.5f,1);
                 canGrabItem = true;
+                resetItemText();
                 hasItem = false;
             }
             else if (currentItem == items.mushroomGolden)
@@ -231,34 +270,101 @@ public class PlayerItemSc : MonoBehaviour {
                 }
                 else if (TrioCount == 3)
                 {
-                    TrioSc[3].isTrio = false;
-                    TrioSc[3].rotTarget = null;
-                    TrioSc[3].StartFreeStart();
-                    Trio3.transform.position = transform.position + (transform.forward * 2f);
-                    TrioRB[3].isKinematic = false;
-                    TrioRB[3].velocity = transform.forward * shellSpeed;
+                    if (Trio3 != null)
+                    {
+                        TrioSc[3].isTrio = false;
+                        TrioSc[3].rotTarget = null;
+                        if (TrioSc[3] != null) { TrioSc[3].StartFreeStart(); }
+                        Trio3.transform.position = transform.position + (transform.forward * 2f);
+                        TrioRB[3].isKinematic = false;
+                        TrioRB[3].velocity = transform.forward * shellSpeed;
+                    }
+                    
                     TrioCount--;
                 }
                 else if (TrioCount == 2)
                 {
-                    TrioSc[2].isTrio = false;
-                    TrioSc[2].rotTarget = null;
-                    TrioSc[2].StartFreeStart();
-                    Trio2.transform.position = transform.position + (transform.forward * 2f);
-                    TrioRB[2].isKinematic = false;
-                    TrioRB[2].velocity = transform.forward * shellSpeed;
+                    if (Trio2 != null)
+                    {
+                        TrioSc[2].isTrio = false;
+                        TrioSc[2].rotTarget = null;
+                        if (TrioSc[2] != null) { TrioSc[2].StartFreeStart(); }
+                        Trio2.transform.position = transform.position + (transform.forward * 2f);
+                        TrioRB[2].isKinematic = false;
+                        TrioRB[2].velocity = transform.forward * shellSpeed;
+                    }
+                    
                     TrioCount--;
                 }
                 else if (TrioCount == 1)
                 {
-                    TrioSc[1].isTrio = false;
-                    TrioSc[1].rotTarget = null;
-                    TrioSc[1].StartFreeStart();
-                    Trio1.transform.position = transform.position + (transform.forward * 2f);
-                    TrioRB[1].isKinematic = false;
-                    TrioRB[1].velocity = transform.forward * shellSpeed;
+                    if (Trio1 != null)
+                    {
+                        TrioSc[1].isTrio = false;
+                        TrioSc[1].rotTarget = null;
+                        if (TrioSc[1] != null) { TrioSc[1].StartFreeStart(); }
+                        Trio1.transform.position = transform.position + (transform.forward * 2f);
+                        TrioRB[1].isKinematic = false;
+                        TrioRB[1].velocity = transform.forward * shellSpeed;
+                    }
+                    
                     resetItemText();
                     canGrabItem = true;
+                    hasItem = false;
+                }
+            }
+            else if (currentItem == items.redShellTrio)
+            {
+                if (TrioCount == 0)
+                {
+                    TrioCount = 3;
+                }
+                else if (TrioCount == 3)
+                {
+                    if (Trio3 != null)
+                    {
+                        if (TrioSc[3] != null) { TrioSc[3].StartFreeStart(); }
+                        TrioSc[3].isTrio = false;
+                        TrioSc[3].rotTarget = null;
+                        Trio3.transform.position = transform.position + (transform.forward * 2f);
+                        TrioRB[3].isKinematic = false;
+                        //TrioRB[3].velocity = transform.forward * shellSpeed;
+                        TrioSc[3].isRed = true;
+                    }
+                    
+                    TrioCount--;
+                }
+                else if (TrioCount == 2)
+                {
+                    if (Trio2 != null)
+                    {
+                        if (TrioSc[2] != null) { TrioSc[2].StartFreeStart(); }
+                        TrioSc[2].isTrio = false;
+                        TrioSc[2].rotTarget = null;
+                        Trio2.transform.position = transform.position + (transform.forward * 2f);
+                        TrioRB[2].isKinematic = false;
+                        //TrioRB[2].velocity = transform.forward * shellSpeed;
+                        TrioSc[2].isRed = true;
+                    }
+                    
+                    TrioCount--;
+                }
+                else if (TrioCount == 1)
+                {
+                    if (Trio1 != null)
+                    {
+                        if (TrioSc[1] != null) { TrioSc[1].StartFreeStart(); }
+                        TrioSc[1].isTrio = false;
+                        TrioSc[1].rotTarget = null;
+                        Trio1.transform.position = transform.position + (transform.forward * 2f);
+                        TrioRB[1].isKinematic = false;
+                        //TrioRB[1].velocity = transform.forward * shellSpeed;
+                        TrioSc[1].isRed = true;
+                    }
+                    
+                    resetItemText();
+                    canGrabItem = true;
+                    TrioCount = 0;
                     hasItem = false;
                 }
             }
@@ -277,11 +383,14 @@ public class PlayerItemSc : MonoBehaviour {
         if (playerID == 0)
         {
             P1ItemText.GetComponent<Text>().text = "No Item";
+            Debug.Log("Image: " + noItemSprite);
             P1ItemImage.sprite = noItemSprite;
         }
         else if (playerID == 1)
         {
             P2ItemText.GetComponent<Text>().text = "No Item";
+            Debug.Log("Image: " + noItemSprite);
+
             P2ItemImage.sprite = noItemSprite;
         }
     }
