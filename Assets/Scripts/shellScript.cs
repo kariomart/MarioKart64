@@ -84,7 +84,7 @@ public class shellScript : MonoBehaviour {
             shellRB.velocity = transform.forward * 25;
             Debug.Log("not tracking");
         }
-        Debug.Log("shell pos: " + transform.position + " target pos " + shellTarget.position);
+//        Debug.Log("shell pos: " + transform.position + " target pos " + shellTarget.position);
 
     }
 

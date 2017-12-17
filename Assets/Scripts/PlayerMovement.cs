@@ -1,5 +1,4 @@
 
-
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,8 +70,12 @@ public class PlayerMovement : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
-
+		void Update () {
+		if (!isRaceOver && playerId == 0 && Time.time > 3) {
+			string totalMinutes = Mathf.Floor (Time.time / 60).ToString ("00");
+			string totalSeconds = (Time.time % 60).ToString ("00");
+			raceTimer.text = totalMinutes + ":" + totalSeconds;
+		}
 	}
 
 	void FixedUpdate() {
@@ -81,6 +84,29 @@ public class PlayerMovement : MonoBehaviour {
             //StartCoroutine(Flip());
             //hopping = false;
         }
+
+		if (Input.GetKeyDown(KeyCode.R) && isRaceOver) {
+
+			UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+
+		}
+
+		if (isRaceOver) {
+
+			CanGo = false;
+			if (playerId == 1) { 
+				raceTimer.text = "Lap 1: "+ lapTimesLuigi [0] + 
+					"\nLap 2: " + lapTimesLuigi [1] +
+					"\nLap 3:  " + lapTimesLuigi [2];
+				
+			} else {
+				raceTimer.text = "Lap 1: "+ lapTimesMario [0] + 
+					"\nLap 2: " + lapTimesMario [1] +
+					"\nLap 3:  " + lapTimesMario [2];
+			}
+
+
+		}
 		if (CanGo) {//Someone correct me if I am wrong here, but putting this here instead of around translate is optimal I believe. When False, we skip this whole thing, rather than doing a needless part, and a bool check is a bool check - Clair
                     //this.transform.rotation = Quaternion.Euler (0, this.transform.rotation.eulerAngles.y, 0);
 
