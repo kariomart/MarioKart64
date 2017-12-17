@@ -69,6 +69,28 @@ MonoBehaviour:
   boxRegen: 2
   assignedItem: 0
   PlayerSc: {fileID: 0}
+  PlayerMovementSc: {fileID: 0}
   xRot: 0
   yRot: 0
   zRot: 0
+  P1ItemText: {fileID: 0}
+  P2ItemText: {fileID: 0}
+  P1ItemImage: {fileID: 0}
+  P2ItemImage: {fileID: 0}
+  ItemImages:
+  - {fileID: 21300000, guid: b613a69fe978db546b0779625b43daa7, type: 3}
+  - {fileID: 21300000, guid: 5aa7e617645a49e4fa3a93df49139d0c, type: 3}
+  - {fileID: 21300000, guid: 53ff075520ccf1f4a8a563546fabacfd, type: 3}
+  - {fileID: 21300000, guid: dab089b4684c7f4459bf29c9b3e06d7a, type: 3}
+  - {fileID: 21300000, guid: 7bf92afd62f2d59499c4064579b453d1, type: 3}
+  - {fileID: 21300000, guid: bad4cfd4cc1ad9e4b952803ca632b02f, type: 3}
+  - {fileID: 21300000, guid: 151a672ab76a03a4795b0da539742525, type: 3}
+  - {fileID: 21300000, guid: dee221c247d637044836c44d7ca1d294, type: 3}
+  - {fileID: 21300000, guid: dee221c247d637044836c44d7ca1d294, type: 3}
+  - {fileID: 21300000, guid: d383bd709adf76c459d542fa8641eaab, type: 3}
+  - {fileID: 21300000, guid: 3492b9061a9ac0a4d925189217c5a17d, type: 3}
+  - {fileID: 21300000, guid: 8b5fc93f7470eb84b8e9e025d7826006, type: 3}
+  - {fileID: 21300000, guid: 147bd4d0e1f07204480ffa92a031a2f9, type: 3}
+  - {fileID: 21300000, guid: 714763c923c0c8642b5909aa020b4a61, type: 3}
+  - {fileID: 21300000, guid: c0208047a88443e4bbcf1e2d124e94d3, type: 3}
+  boxCollider: {fileID: 0}
