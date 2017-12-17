@@ -42,6 +42,8 @@ ModelImporter:
     100068: pPipe2
     100070: pPipe3
     100072: pPlane1
+    100074: bezier1
+    100076: pCube32
     400000: Brick_Walls
     400002: Checkered_Walls
     400004: curve1
@@ -79,6 +81,8 @@ ModelImporter:
     400068: pPipe2
     400070: pPipe3
     400072: pPlane1
+    400074: bezier1
+    400076: pCube32
     2300000: pasted__pPlane1
     2300002: pCube10
     2300004: pCube12
@@ -107,6 +111,7 @@ ModelImporter:
     2300050: pPipe2
     2300052: pPipe3
     2300054: pPlane1
+    2300056: pCube32
     3300000: pasted__pPlane1
     3300002: pCube10
     3300004: pCube12
@@ -135,6 +140,7 @@ ModelImporter:
     3300050: pPipe2
     3300052: pPipe3
     3300054: pPlane1
+    3300056: pCube32
     4300000: pCube9
     4300002: pPlane1
     4300004: pCube10
@@ -163,6 +169,7 @@ ModelImporter:
     4300050: pCube26
     4300052: pCube31
     4300054: pasted__pPlane1
+    4300056: pCube32
     9500000: //RootNode
   materials:
     importMaterials: 1
