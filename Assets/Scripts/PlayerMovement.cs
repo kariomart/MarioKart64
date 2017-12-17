@@ -17,10 +17,9 @@ public class PlayerMovement : MonoBehaviour {
 	public float acceleration=.1f;
 	public float maxSpeed=10;
 
-	public bool isRaceOver = false;
-
-  	public Text raceTimer; // On the UI, the character's race time
-	public Text lapCounter; // Lap counter
+    public Text raceTimer; // On the UI, the character's race time
+    public Text lapCounter; // Lap counter
+    bool isRaceOver=false;
 
 	public float[] lapTimesMario; // Mario's Lap Times
 	public float[] lapTimesLuigi; // Luigi's Lap Times
@@ -63,8 +62,10 @@ public class PlayerMovement : MonoBehaviour {
 	void Start () {
 
 		rigid = GetComponent<Rigidbody> ();
-        //kartModel = transform.Find("KartFrame");
-	}
+        lapTimesMario = new float[3]; // Mario's Lap Times
+        lapTimesLuigi = new float[3]; // Luigi's Lap Times
+                                       //kartModel = transform.Find("KartFrame");
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -75,7 +76,7 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //StartCoroutine(Flip());
-            hopping = false;
+            //hopping = false;
         }
 		if (CanGo) {//Someone correct me if I am wrong here, but putting this here instead of around translate is optimal I believe. When False, we skip this whole thing, rather than doing a needless part, and a bool check is a bool check - Clair
                     //this.transform.rotation = Quaternion.Euler (0, this.transform.rotation.eulerAngles.y, 0);
@@ -376,7 +377,6 @@ public class PlayerMovement : MonoBehaviour {
             StartCoroutine(HitBanana());
 
             Destroy(collision.gameObject);
-
         }
         
         if (collision.gameObject.tag == "ground")//Clair's enter drift code
@@ -409,6 +409,7 @@ public class PlayerMovement : MonoBehaviour {
         float duration = 1;
         Quaternion StartRotation = transform.rotation;
         float t = 0f;
+        PlayerCamera.GetComponent<CameraController>().cameraLock = true;
         while (t<duration)
         {
             transform.rotation = StartRotation * Quaternion.AngleAxis(t / duration * 720f, Vector3.up);
@@ -418,6 +419,7 @@ public class PlayerMovement : MonoBehaviour {
         transform.rotation = StartRotation;
         //Debug.Log("HitBanana() activated");
         yield return new WaitForSeconds(1);
+        PlayerCamera.GetComponent<CameraController>().cameraLock = false;
         acceleration = 0.1f;
     }
 
