@@ -48,6 +48,9 @@ public class PlayerMovement : MonoBehaviour {
     //Angular Velocity var -Clair
     public float angularCap=.5f;
 
+    //Max Angle - Clair
+    public float maxAngle = 30;
+
 
     //Borrowing this name convention from the original implementation, we really should fix this -Clair
     float x;//Turning, between -1 and 1
@@ -103,34 +106,34 @@ public class PlayerMovement : MonoBehaviour {
                 rigid.angularVelocity = new Vector3(rigid.angularVelocity.x, rigid.angularVelocity.y, -1 * angularCap);
             }
 
-            if (this.transform.rotation.eulerAngles.x > 40&& this.transform.rotation.eulerAngles.x < 100)//checking our rotation doesn't go crazy - Clair
+            if (this.transform.rotation.eulerAngles.x > maxAngle&& this.transform.rotation.eulerAngles.x < 100)//checking our rotation doesn't go crazy - Clair
             {
                 Debug.Log("x>40");
                 Debug.Log("rotation =" + this.transform.rotation.eulerAngles);
 
-                this.transform.eulerAngles = new Vector3(40, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+                this.transform.eulerAngles = new Vector3(maxAngle, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
                 
             }
-            else if (this.transform.rotation.eulerAngles.x < 320&& this.transform.rotation.eulerAngles.x > 260)
+            else if (this.transform.rotation.eulerAngles.x < (360-maxAngle)&& this.transform.rotation.eulerAngles.x > 260)
             {
                 Debug.Log("x<-40");
                 Debug.Log("rotation =" + this.transform.rotation.eulerAngles);
-                this.transform.eulerAngles = new Vector3(320, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+                this.transform.eulerAngles = new Vector3((360-maxAngle), this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
             }
 
-            if (this.transform.rotation.eulerAngles.z > 40 && this.transform.rotation.eulerAngles.z < 100)//checking our rotation doesn't go crazy - Clair
+            if (this.transform.rotation.eulerAngles.z > maxAngle && this.transform.rotation.eulerAngles.z < 100)//checking our rotation doesn't go crazy - Clair
             {
                 Debug.Log("z>40");
                 Debug.Log("rotation =" + this.transform.rotation.eulerAngles);
-                this.transform.eulerAngles = new Vector3(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 40);
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, maxAngle);
 
 
             }
-            else if (this.transform.rotation.eulerAngles.z < 320 && this.transform.rotation.eulerAngles.z > 260)
+            else if (this.transform.rotation.eulerAngles.z < (360-maxAngle) && this.transform.rotation.eulerAngles.z > 260)
             {
                 Debug.Log("x<-40");
                 Debug.Log("rotation =" + this.transform.rotation.eulerAngles);
-                this.transform.eulerAngles = new Vector3(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 320);
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, (360-maxAngle));
                
             }
 
