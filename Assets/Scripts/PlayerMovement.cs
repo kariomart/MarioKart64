@@ -43,6 +43,9 @@ public class PlayerMovement : MonoBehaviour {
     public RaycastHit bl;
     public RaycastHit br;
 
+    //Angular Velocity var -Clair
+    public float angularCap=.5f;
+
 
     //Borrowing this name convention from the original implementation, we really should fix this -Clair
     float x;//Turning, between -1 and 1
@@ -73,23 +76,103 @@ public class PlayerMovement : MonoBehaviour {
         }
 		if (CanGo) {//Someone correct me if I am wrong here, but putting this here instead of around translate is optimal I believe. When False, we skip this whole thing, rather than doing a needless part, and a bool check is a bool check - Clair
                     //this.transform.rotation = Quaternion.Euler (0, this.transform.rotation.eulerAngles.y, 0);
-            Vector3 temp;
+
+
+        // this.GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);//THIS WORKS but has weird repurcussions-Clair
+            //Physics.gravity = new Vector3(0, -10f, 0);
+
+            if (rigid.angularVelocity.x > angularCap)
+            {
+                rigid.angularVelocity = new Vector3(angularCap, rigid.angularVelocity.y, rigid.angularVelocity.z);
+            }
+            else if (rigid.angularVelocity.x <-1*angularCap)
+            {
+                rigid.angularVelocity = new Vector3(-1*angularCap, rigid.angularVelocity.y, rigid.angularVelocity.z);
+            }
+
+            if (rigid.angularVelocity.z > angularCap)
+            {
+                rigid.angularVelocity = new Vector3(rigid.angularVelocity.x, rigid.angularVelocity.y, angularCap);
+            }
+            else if (rigid.angularVelocity.z < -1 * angularCap)
+            {
+                rigid.angularVelocity = new Vector3(rigid.angularVelocity.x, rigid.angularVelocity.y, -1 * angularCap);
+            }
+
+            /*if (this.transform.rotation.eulerAngles.x > 40)//checking our rotation doesn't go crazy - Clair
+            {
+                this.transform.rotation = Quaternion.Euler(40, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+                Debug.Log("x>40");
+            }
+            else if (this.transform.rotation.eulerAngles.x < -40)
+            {
+                this.transform.rotation = Quaternion.Euler(-40, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+                Debug.Log("x<-40");
+            }
+            if (this.transform.rotation.eulerAngles.z > 40)//checking our rotation doesn't go crazy - Clair
+            {
+                this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 40);
+                Debug.Log("z > 40");
+            }
+            else if (this.transform.rotation.eulerAngles.z < -40)
+            {
+                this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, -40);
+                Debug.Log("z<-40");
+            }*/
+
+
+
+            /*Vector3 temp= new Vector3(0,0,0);
+            int hits=0;
             if(Physics.Raycast(frontLeft.position, -1*this.transform.up, out fl))
-            {   
+            {
+                if (fl.transform.tag == "Ground") {
+                    hits++;
+                    temp += fl.normal;
+                }
+                //Debug.Log(fl.normal);
             }
 
             if (Physics.Raycast(frontRight.position, -1 * this.transform.up, out fr))
             {
+                if (fr.transform.tag == "ground")
+                {
+                    hits++;
+                    temp += fr.normal;
+                }
+                //Debug.Log(fr.normal);
             }
             if (Physics.Raycast(backRight.position, -1 * this.transform.up, out br))
             {
+                if (br.transform.tag == "ground")
+                {
+                    hits++;
+                    temp += br.normal;
+                }
+                // Debug.Log(br.normal);
             }
             if (Physics.Raycast(backRight.position, -1 * this.transform.up, out bl))
             {
+                if (bl.transform.tag == "ground")
+                {
+                    hits++;
+                    temp += bl.normal;
+                }
+                // Debug.Log(bl.normal);
             }
-            temp = (fl.normal + fr.normal + bl.normal + br.normal)/4;
+            if (hits > 0)
+            {
+                temp = temp / hits;
+                this.transform.rotation = Quaternion.FromToRotation(Vector3.up, temp);
+            }
+            else
+            {
+                Debug.Log("error!!!!");
+            }*/
+            //temp = (fl.normal + fr.normal + bl.normal + br.normal)/4;
+            //Debug.Log(temp);
             //this.transform.up = new Vector3(temp.x, temp.y, temp.z);
-            Quaternion.FromToRotation(Vector3.right, temp);
+
 
 
             //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
