@@ -28,6 +28,8 @@ public class RaceManagerScript : MonoBehaviour {
    
     public bool[] HasStarted = { false, false };//Has Crossed the starting line
 
+	public AudioClip MarioRaceway;
+
     
     //public Vector3[] triggerPos = new Vector3[14];
 	void Start () {
@@ -104,6 +106,7 @@ public class RaceManagerScript : MonoBehaviour {
          yield return new WaitForSeconds(1f);*/
         float p1boost=-100;
         float p2boost=-100;
+		SoundController.me.PlaySound (MarioRaceway, 1f);
 
         for (float t = 2.9999999f; t > 0f; t -= Time.deltaTime)//For 3 seconds
         {
@@ -111,7 +114,7 @@ public class RaceManagerScript : MonoBehaviour {
             if (Input.GetAxis("AccelP1") > .5f&& t >.1f)
             {
                 p1boost = t;//Record the last time they were holding accel
-                Debug.Log(t);
+//                Debug.Log(t);
             }
             if (Input.GetAxis("AccelP2") > .5f && t > .1f)
             {
@@ -142,7 +145,6 @@ public class RaceManagerScript : MonoBehaviour {
 
         yield return new WaitForSeconds(.5f);//waits for half a second
         countdown.text = "";
-        
 
     }
 }

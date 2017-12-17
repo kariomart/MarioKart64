@@ -233,7 +233,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
             assignedItem = items.bananaBunch;
         }
         Debug.Log("Roll: " + itemNum);
-        Debug.Log("Assigned item: " + assignedItem);
+//        Debug.Log("Assigned item: " + assignedItem);
         PlayerSc.equipItem(assignedItem);
         
         if (playerID == 0)

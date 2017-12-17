@@ -288,7 +288,7 @@ public class PlayerItemSc : MonoBehaviour {
 
     public void equipItem(items toEquip)
     {
-        Debug.Log("Current Item: " + toEquip);
+//        Debug.Log("Current Item: " + toEquip);
         currentItem = toEquip;
         hasItem = true;
     }

@@ -1,6 +1,4 @@
-
-
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour {
 
 
-  //items stuff
+  	//items stuff
   	public bool isInvincible;
 
 	//Vector2 vel =  new Vector2(0, 0);
@@ -17,9 +15,8 @@ public class PlayerMovement : MonoBehaviour {
 	public float acceleration=.1f;
 	public float maxSpeed=10;
 
-    public Text raceTimer; // On the UI, the character's race time
-    public Text lapCounter; // Lap counter
-    bool isRaceOver=false;
+  	public Text raceTimer; // On the UI, the character's race time
+	public Text lapCounter; // Lap counter
 
 	public float[] lapTimesMario; // Mario's Lap Times
 	public float[] lapTimesLuigi; // Luigi's Lap Times
@@ -32,6 +29,7 @@ public class PlayerMovement : MonoBehaviour {
     float boostMultiplier;
     public bool[] drifting = { false, false };//If Drifting, False = left True = Right
     public bool hopping = false;
+	public bool isRaceOver;
     float maxReverse = -3f;
    // public Transform kartModel;
 
@@ -45,11 +43,8 @@ public class PlayerMovement : MonoBehaviour {
     public RaycastHit bl;
     public RaycastHit br;
 
-    //Angular Velocity var -Clair
-    public float angularCap=.5f;
 
-
-    //Borrowing this name convention from the original implementation, we really should fix this -Clair
+	//Borrowing this name convisRaceOverention from the original implementation, we really should fix this -Clair
     float x;//Turning, between -1 and 1
     float y;//acceleration
     float z;//Triggers
@@ -69,7 +64,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		if (!isRaceOver && playerId == 0 && Time.time > 3) {
+			string totalMinutes = Mathf.Floor (Time.time / 60).ToString ("00");
+			string totalSeconds = (Time.time % 60).ToString ("00");
+			raceTimer.text = totalMinutes + ":" + totalSeconds;
+		}
 	}
 
 	void FixedUpdate() {
@@ -78,105 +77,49 @@ public class PlayerMovement : MonoBehaviour {
             //StartCoroutine(Flip());
             //hopping = false;
         }
+
+		if (Input.GetKeyDown(KeyCode.R) && isRaceOver) {
+
+			UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+
+		}
+
+		if (isRaceOver) {
+
+			CanGo = false;
+			if (playerId == 1) { 
+				raceTimer.text = "Lap 1: "+ lapTimesLuigi [0] + 
+					"\nLap 2: " + lapTimesLuigi [1] +
+					"\nLap 3:  " + lapTimesLuigi [2];
+				
+			} else {
+				raceTimer.text = "Lap 1: "+ lapTimesMario [0] + 
+					"\nLap 2: " + lapTimesMario [1] +
+					"\nLap 3:  " + lapTimesMario [2];
+			}
+
+
+		}
+
 		if (CanGo) {//Someone correct me if I am wrong here, but putting this here instead of around translate is optimal I believe. When False, we skip this whole thing, rather than doing a needless part, and a bool check is a bool check - Clair
                     //this.transform.rotation = Quaternion.Euler (0, this.transform.rotation.eulerAngles.y, 0);
-
-
-        // this.GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);//THIS WORKS but has weird repurcussions-Clair
-            //Physics.gravity = new Vector3(0, -10f, 0);
-
-            if (rigid.angularVelocity.x > angularCap)
-            {
-                rigid.angularVelocity = new Vector3(angularCap, rigid.angularVelocity.y, rigid.angularVelocity.z);
-            }
-            else if (rigid.angularVelocity.x <-1*angularCap)
-            {
-                rigid.angularVelocity = new Vector3(-1*angularCap, rigid.angularVelocity.y, rigid.angularVelocity.z);
-            }
-
-            if (rigid.angularVelocity.z > angularCap)
-            {
-                rigid.angularVelocity = new Vector3(rigid.angularVelocity.x, rigid.angularVelocity.y, angularCap);
-            }
-            else if (rigid.angularVelocity.z < -1 * angularCap)
-            {
-                rigid.angularVelocity = new Vector3(rigid.angularVelocity.x, rigid.angularVelocity.y, -1 * angularCap);
-            }
-
-            /*if (this.transform.rotation.eulerAngles.x > 40)//checking our rotation doesn't go crazy - Clair
-            {
-                this.transform.rotation = Quaternion.Euler(40, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
-                Debug.Log("x>40");
-            }
-            else if (this.transform.rotation.eulerAngles.x < -40)
-            {
-                this.transform.rotation = Quaternion.Euler(-40, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
-                Debug.Log("x<-40");
-            }
-            if (this.transform.rotation.eulerAngles.z > 40)//checking our rotation doesn't go crazy - Clair
-            {
-                this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 40);
-                Debug.Log("z > 40");
-            }
-            else if (this.transform.rotation.eulerAngles.z < -40)
-            {
-                this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, -40);
-                Debug.Log("z<-40");
-            }*/
-
-
-
-            /*Vector3 temp= new Vector3(0,0,0);
-            int hits=0;
+            Vector3 temp;
             if(Physics.Raycast(frontLeft.position, -1*this.transform.up, out fl))
-            {
-                if (fl.transform.tag == "Ground") {
-                    hits++;
-                    temp += fl.normal;
-                }
-                //Debug.Log(fl.normal);
+            {   
             }
 
             if (Physics.Raycast(frontRight.position, -1 * this.transform.up, out fr))
             {
-                if (fr.transform.tag == "ground")
-                {
-                    hits++;
-                    temp += fr.normal;
-                }
-                //Debug.Log(fr.normal);
             }
             if (Physics.Raycast(backRight.position, -1 * this.transform.up, out br))
             {
-                if (br.transform.tag == "ground")
-                {
-                    hits++;
-                    temp += br.normal;
-                }
-                // Debug.Log(br.normal);
             }
             if (Physics.Raycast(backRight.position, -1 * this.transform.up, out bl))
             {
-                if (bl.transform.tag == "ground")
-                {
-                    hits++;
-                    temp += bl.normal;
-                }
-                // Debug.Log(bl.normal);
             }
-            if (hits > 0)
-            {
-                temp = temp / hits;
-                this.transform.rotation = Quaternion.FromToRotation(Vector3.up, temp);
-            }
-            else
-            {
-                Debug.Log("error!!!!");
-            }*/
-            //temp = (fl.normal + fr.normal + bl.normal + br.normal)/4;
-            //Debug.Log(temp);
+            temp = (fl.normal + fr.normal + bl.normal + br.normal)/4;
             //this.transform.up = new Vector3(temp.x, temp.y, temp.z);
-
+            Quaternion.FromToRotation(Vector3.right, temp);
 
 
             //We needed to be able to handle many unique players, therefore our Axis names must be dynamic. -Clair
@@ -306,6 +249,7 @@ public class PlayerMovement : MonoBehaviour {
 
 				if (lapCount == 2 && playerId == 0) {
 					isRaceOver = true; 
+
 					for (int i = 0; i < lapTimesMario.Length; i++) {
 						string minutes = Mathf.Floor (lapTimesMario [i] / 60).ToString ("00");
 						string seconds = (lapTimesMario [i] % 60).ToString ("00");
@@ -317,8 +261,12 @@ public class PlayerMovement : MonoBehaviour {
 
 					raceTimer.text += "";
 					raceTimer.text += "\nTotal:" + totalMinutes + ":" + totalSeconds;
+
 				} else if(lapCount == 2 && playerId == 1) {
+					
 					isRaceOver = true; 
+
+	
 					for (int i = 0; i < lapTimesLuigi.Length; i++) {
 						string minutes = Mathf.Floor (lapTimesLuigi [i] / 60).ToString ("00");
 						string seconds = (lapTimesLuigi [i] % 60).ToString ("00");
@@ -333,7 +281,8 @@ public class PlayerMovement : MonoBehaviour {
 				}
 				
 				RaceManagerScript.Singleton.lapCounts[playerId]++;
-				lapCount = Mathf.Clamp (lapCount+2, 0, 3);
+
+				lapCount = Mathf.Clamp (lapCount + 2, 0, 3);
 				if (playerId == 0) {
 					lapCounter.text = "Lap: " + lapCount + "/3";
 				}
