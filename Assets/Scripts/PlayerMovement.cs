@@ -3,12 +3,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
 
   //items stuff
-  public bool isInvincible;
+  	public bool isInvincible;
 
 	//Vector2 vel =  new Vector2(0, 0);
 	Rigidbody rigid;
@@ -16,7 +17,9 @@ public class PlayerMovement : MonoBehaviour {
 	public float acceleration=.1f;
 	public float maxSpeed=10;
 
-  public Text raceTimer; // On the UI, the character's race time
+	public bool isRaceOver = false;
+
+  	public Text raceTimer; // On the UI, the character's race time
 	public Text lapCounter; // Lap counter
 
 	public float[] lapTimesMario; // Mario's Lap Times
