@@ -103,26 +103,36 @@ public class PlayerMovement : MonoBehaviour {
                 rigid.angularVelocity = new Vector3(rigid.angularVelocity.x, rigid.angularVelocity.y, -1 * angularCap);
             }
 
-            /*if (this.transform.rotation.eulerAngles.x > 40)//checking our rotation doesn't go crazy - Clair
+            if (this.transform.rotation.eulerAngles.x > 40&& this.transform.rotation.eulerAngles.x < 100)//checking our rotation doesn't go crazy - Clair
             {
-                this.transform.rotation = Quaternion.Euler(40, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
                 Debug.Log("x>40");
+                Debug.Log("rotation =" + this.transform.rotation.eulerAngles);
+
+                this.transform.eulerAngles = new Vector3(40, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+                
             }
-            else if (this.transform.rotation.eulerAngles.x < -40)
+            else if (this.transform.rotation.eulerAngles.x < 320&& this.transform.rotation.eulerAngles.x > 260)
             {
-                this.transform.rotation = Quaternion.Euler(-40, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
                 Debug.Log("x<-40");
+                Debug.Log("rotation =" + this.transform.rotation.eulerAngles);
+                this.transform.eulerAngles = new Vector3(320, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
             }
-            if (this.transform.rotation.eulerAngles.z > 40)//checking our rotation doesn't go crazy - Clair
+
+            if (this.transform.rotation.eulerAngles.z > 40 && this.transform.rotation.eulerAngles.z < 100)//checking our rotation doesn't go crazy - Clair
             {
-                this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 40);
-                Debug.Log("z > 40");
+                Debug.Log("z>40");
+                Debug.Log("rotation =" + this.transform.rotation.eulerAngles);
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 40);
+
+
             }
-            else if (this.transform.rotation.eulerAngles.z < -40)
+            else if (this.transform.rotation.eulerAngles.z < 320 && this.transform.rotation.eulerAngles.z > 260)
             {
-                this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, -40);
-                Debug.Log("z<-40");
-            }*/
+                Debug.Log("x<-40");
+                Debug.Log("rotation =" + this.transform.rotation.eulerAngles);
+                this.transform.eulerAngles = new Vector3(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y, 320);
+               
+            }
 
 
 
@@ -305,7 +315,7 @@ public class PlayerMovement : MonoBehaviour {
 				}
 
 				if (lapCount == 2 && playerId == 0) {
-					isRaceOver = true; 
+					//isRaceOver = true; 
 					for (int i = 0; i < lapTimesMario.Length; i++) {
 						string minutes = Mathf.Floor (lapTimesMario [i] / 60).ToString ("00");
 						string seconds = (lapTimesMario [i] % 60).ToString ("00");
@@ -318,7 +328,7 @@ public class PlayerMovement : MonoBehaviour {
 					raceTimer.text += "";
 					raceTimer.text += "\nTotal:" + totalMinutes + ":" + totalSeconds;
 				} else if(lapCount == 2 && playerId == 1) {
-					isRaceOver = true; 
+					//isRaceOver = true; 
 					for (int i = 0; i < lapTimesLuigi.Length; i++) {
 						string minutes = Mathf.Floor (lapTimesLuigi [i] / 60).ToString ("00");
 						string seconds = (lapTimesLuigi [i] % 60).ToString ("00");
