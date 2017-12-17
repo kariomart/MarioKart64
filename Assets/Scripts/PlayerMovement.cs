@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
   //items stuff
-  public bool isInvincible;
+  	public bool isInvincible;
 
 	//Vector2 vel =  new Vector2(0, 0);
 	Rigidbody rigid;
