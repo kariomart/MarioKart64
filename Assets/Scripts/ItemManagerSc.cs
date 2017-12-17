@@ -42,7 +42,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
     public Image P2ItemImage;
     public Sprite[] ItemImages;
     public BoxCollider boxCollider;
-
+   
 
     // Use this for initialization
     void Start () {
@@ -52,7 +52,6 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         P2ItemText = GameObject.Find("P2ItemText");
         P1ItemImage = GameObject.Find("P1ItemImage").GetComponent<Image>();
         P2ItemImage = GameObject.Find("P2ItemImage").GetComponent<Image>();
-
         xRot = Random.Range(-.4f, .4f);
         if (xRot <= 0)
         {
@@ -72,8 +71,9 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         {
             boxTimer += Time.deltaTime;
         }
-        transform.Rotate(xRot,yRot,zRot); 
-	}
+        transform.Rotate(xRot,yRot,zRot);
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -100,7 +100,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         startTimer = true;
         itemNum = Random.Range(0, 100);
         Debug.Log(itemNum);
-        /*if (playerID == 0)
+        if ((playerID == 0 && RaceManagerScript.Singleton.P1isFirst) || (playerID == 1 && !RaceManagerScript.Singleton.P1isFirst))
         {
             Debug.Log("player1");
             if (itemNum >= 0 && itemNum < 25)
@@ -146,7 +146,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
                 assignedItem = items.bananaBunch;
             }
         }
-        if (playerID == 1)
+        if ((playerID == 1 && RaceManagerScript.Singleton.P1isFirst) || (playerID == 0 && !RaceManagerScript.Singleton.P1isFirst))
         {
             Debug.Log("player2");
             if (itemNum >=0 && itemNum < 15)
@@ -181,7 +181,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
             {
                 //C item: lightning
                 //assignedItem = items.lightning;
-                assignedItem = items.greenShellTrio;
+                assignedItem = items.badCube;
             }
             else if (itemNum >= 76 && itemNum < 84)
             {
@@ -193,16 +193,16 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
             {
                 //C item: red shell
                 //assignedItem = items.redShell;
-                assignedItem = items.greenShell;
+                assignedItem = items.redShell;
             }
             else if (itemNum >= 92 && itemNum <= 100)
             {
                 //C item: green shell trio
                 assignedItem = items.greenShellTrio;
             }
-        }*/
+        }
         //The following is an alternate item roulette for the items we currently have working
-        if (itemNum >= 0 && itemNum < 25)
+        /*if (itemNum >= 0 && itemNum < 25)
         {
             //A item: green shell
             assignedItem = items.greenShell;
@@ -231,7 +231,7 @@ public class ItemManagerSc : MonoBehaviour { //handles boxes, UI, which item the
         {
             //banana bunch
             assignedItem = items.bananaBunch;
-        }
+        }*/
         Debug.Log("Roll: " + itemNum);
         Debug.Log("Assigned item: " + assignedItem);
         PlayerSc.equipItem(assignedItem);
