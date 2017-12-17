@@ -3,12 +3,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
 
   //items stuff
-  public bool isInvincible;
+  	public bool isInvincible;
 
 	//Vector2 vel =  new Vector2(0, 0);
 	Rigidbody rigid;
@@ -16,8 +17,9 @@ public class PlayerMovement : MonoBehaviour {
 	public float acceleration=.1f;
 	public float maxSpeed=10;
 
-  public Text raceTimer; // On the UI, the character's race time
-	public Text lapCounter; // Lap counter
+    public Text raceTimer; // On the UI, the character's race time
+    public Text lapCounter; // Lap counter
+    bool isRaceOver=false;
 
 	public float[] lapTimesMario; // Mario's Lap Times
 	public float[] lapTimesLuigi; // Luigi's Lap Times
@@ -60,8 +62,10 @@ public class PlayerMovement : MonoBehaviour {
 	void Start () {
 
 		rigid = GetComponent<Rigidbody> ();
-        //kartModel = transform.Find("KartFrame");
-	}
+        lapTimesMario = new float[3]; // Mario's Lap Times
+        lapTimesLuigi = new float[3]; // Luigi's Lap Times
+                                       //kartModel = transform.Find("KartFrame");
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -72,7 +76,7 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //StartCoroutine(Flip());
-            hopping = false;
+            //hopping = false;
         }
 		if (CanGo) {//Someone correct me if I am wrong here, but putting this here instead of around translate is optimal I believe. When False, we skip this whole thing, rather than doing a needless part, and a bool check is a bool check - Clair
                     //this.transform.rotation = Quaternion.Euler (0, this.transform.rotation.eulerAngles.y, 0);
