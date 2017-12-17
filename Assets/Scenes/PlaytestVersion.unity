@@ -4336,7 +4336,6 @@ MonoBehaviour:
   backRight: {fileID: 697598126}
   frontLeft: {fileID: 2102441036}
   frontRight: {fileID: 1218357259}
-  angularCap: 0
   PlayerCamera: {fileID: 1879453584}
 --- !u!54 &986861903
 Rigidbody:
@@ -9175,7 +9174,6 @@ MonoBehaviour:
   backRight: {fileID: 210441064}
   frontLeft: {fileID: 1703550509}
   frontRight: {fileID: 1282383792}
-  angularCap: 0
   PlayerCamera: {fileID: 1469057391}
 --- !u!1001 &1833230012
 Prefab:
@@ -11140,10 +11138,6 @@ Prefab:
     - target: {fileID: 400076, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 100076, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
-      propertyPath: m_TagString
-      value: ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b8a5e197109cd84195f59b130c1e1bc, type: 3}
