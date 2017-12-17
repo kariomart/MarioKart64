@@ -3,6 +3,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -301,7 +302,7 @@ public class PlayerMovement : MonoBehaviour {
 				}
 
 				if (lapCount == 2 && playerId == 0) {
-					isRaceOver = true; 
+					//isRaceOver = true; 
 					for (int i = 0; i < lapTimesMario.Length; i++) {
 						string minutes = Mathf.Floor (lapTimesMario [i] / 60).ToString ("00");
 						string seconds = (lapTimesMario [i] % 60).ToString ("00");
@@ -314,7 +315,7 @@ public class PlayerMovement : MonoBehaviour {
 					raceTimer.text += "";
 					raceTimer.text += "\nTotal:" + totalMinutes + ":" + totalSeconds;
 				} else if(lapCount == 2 && playerId == 1) {
-					isRaceOver = true; 
+					//isRaceOver = true; 
 					for (int i = 0; i < lapTimesLuigi.Length; i++) {
 						string minutes = Mathf.Floor (lapTimesLuigi [i] / 60).ToString ("00");
 						string seconds = (lapTimesLuigi [i] % 60).ToString ("00");
